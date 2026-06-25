@@ -1,0 +1,207 @@
+
+
+.text-xs{
+	font-size: $font-xs !important;
+}
+.nav-link.active {
+  color: $primary !important;
+  
+}
+
+.circle-bg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 800px;
+  height: 800px;
+  background-color: rgba($primary, 0.05);
+  border-radius: 9999px;
+  filter: blur(48px);
+}
+
+// pulse wave
+
+.play-btn {
+    font-size: 24px;
+    line-height: 32px;
+    position: relative;
+    background-color: rgba($primary, 0.85);
+    &:before {
+        content: "";
+        position: absolute;
+        width: 150%;
+        height: 150%;
+        -webkit-animation-delay: 0s;
+        animation-delay: 0s;
+        -webkit-animation: pulsate1 2s;
+        animation: pulsate1 2s;
+        -webkit-animation-direction: forwards;
+        animation-direction: forwards;
+        -webkit-animation-iteration-count: infinite;
+        animation-iteration-count: infinite;
+        -webkit-animation-timing-function: steps;
+        animation-timing-function: steps;
+        opacity: 1;
+        border-radius: 50%;
+        border: 5px solid var(--#{$prefix}border-color);
+        box-shadow: rgba(0, 0, 0, 0.3) 0px 2px 4px 0px;
+    }
+}
+
+@-webkit-keyframes pulsate1 {
+    0% {
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+        opacity: 0;
+        box-shadow: none;
+    }
+}
+
+@keyframes pulsate1 {
+    0% {
+        -webkit-transform: scale(0.8);
+        transform: scale(0.8);
+        opacity: 1;
+    }
+    100% {
+        -webkit-transform: scale(1, 1);
+        transform: scale(1);
+        opacity: 0;
+        box-shadow: none;
+    }
+}
+
+
+// Image-driven background sections
+.bg-cover {
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.bg-fixed {
+  @media (min-width: 992px) {
+    background-attachment: fixed;
+  }
+}
+
+.overlay-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 30, 22, 0.55), rgba(10, 30, 22, 0.75));
+  z-index: 0;
+}
+
+.overlay-primary::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, rgba(20, 60, 45, 0.82), rgba(47, 143, 107, 0.55));
+  z-index: 0;
+}
+
+.overlay-content {
+  position: relative;
+  z-index: 1;
+}
+
+// Big play button for video bands
+.play-btn-lg {
+  width: 96px;
+  height: 96px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: rgba($primary, 0.92);
+  color: #fff;
+  transition: transform .25s ease;
+  &:before {
+    content: "";
+    position: absolute;
+    width: 130%;
+    height: 130%;
+    border-radius: 50%;
+    border: 4px solid rgba(255, 255, 255, 0.5);
+    animation: pulsate1 2.2s infinite;
+  }
+  &:hover {
+    transform: scale(1.06);
+    color: #fff;
+  }
+}
+
+// Gallery hover
+.gallery-img {
+  overflow: hidden;
+  img {
+    transition: transform .6s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &:hover img {
+    transform: scale(1.08);
+  }
+}
+
+.section-divider-leaf {
+  color: $primary;
+  opacity: .5;
+}
+
+// AVN ring brand mark + decorative rings
+.brand-mark {
+  fill: none;
+}
+
+.ring-decor {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+  color: $primary;
+  opacity: 0.07;
+  stroke-width: 2.2;
+  fill: none;
+}
+
+.ring-decor-light {
+  color: #fff;
+  opacity: 0.14;
+}
+
+// Bento floating cards behind the video card
+.bento-float {
+  position: absolute;
+  z-index: 1;
+  background: #fff;
+  border: 1px solid var(--#{$prefix}border-color);
+  border-radius: 1rem;
+  padding: .7rem 1.1rem;
+  box-shadow: 0 1.25rem 2.5rem rgba(20, 50, 38, 0.12);
+  white-space: nowrap;
+  animation: bentoFloat 6s ease-in-out infinite;
+}
+
+.bento-tl { top: 0; left: 0; transform: translate(-20%, -48%); }
+.bento-tr { top: 0; right: 0; transform: translate(20%, -48%); animation-delay: 1.2s; }
+.bento-bl { bottom: 0; left: 0; transform: translate(-20%, 48%); animation-delay: 2.4s; }
+.bento-br { bottom: 0; right: 0; transform: translate(20%, 48%); animation-delay: .6s; }
+
+@keyframes bentoFloat {
+  0%, 100% { margin-top: 0; }
+  50% { margin-top: -10px; }
+}
+
+@import "./avatar";
+@import "./button";
+@import "./icon-shape";
+@import "./utilities";
+@import "./card";
