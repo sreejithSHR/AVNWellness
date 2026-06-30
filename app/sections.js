@@ -116,8 +116,10 @@ export function renderTestimonials(list) {
   }).join('');
 }
 
+export const GALLERY_VISIBLE = 8; // 2 rows x 4 on desktop
+
 export function renderGallery(list) {
-  return (list || []).map((src, i) => `<div class="col-lg-3 col-md-4 col-6">
+  return (list || []).map((src, i) => `<div class="col-lg-3 col-md-4 col-6${i >= GALLERY_VISIBLE ? ' gallery-extra' : ''}">
       <a href="${E(src)}" class="glightbox gallery-img rounded-4 shadow-sm d-block" data-gallery="avn-gallery" style="aspect-ratio:1/1;" aria-label="Open image ${i + 1}">
         <img src="${E(src)}" alt="AVN wellness" loading="lazy" style="width:100%;height:100%;object-fit:cover;">
       </a>
@@ -132,5 +134,13 @@ export function applySections(root, content) {
   if (content.pricing) set('pricingGrid', renderPricing(content.pricing));
   if (content.testimonials) set('testimonialsGrid', renderTestimonials(content.testimonials));
   if (content.faq) set('faqAccordion', renderFaq(content.faq));
-  if (content.gallery) set('galleryGrid', renderGallery(content.gallery));
+  if (content.gallery) {
+    set('galleryGrid', renderGallery(content.gallery));
+    const more = root.querySelector('#galleryMore');
+    if (more) {
+      more.innerHTML = content.gallery.length > GALLERY_VISIBLE
+        ? `<button type="button" class="btn btn-outline-dark gallery-more-btn" data-shown="${GALLERY_VISIBLE}" data-total="${content.gallery.length}">View More (${content.gallery.length - GALLERY_VISIBLE})</button>`
+        : '';
+    }
+  }
 }

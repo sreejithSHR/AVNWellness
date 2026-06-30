@@ -1027,6 +1027,7 @@ export const homepageHtml = `
           </div>
         </div>
       </div>
+      <div class="text-center mt-6" id="galleryMore"></div>
     </div>
   </section>
   <!-- Environment Gallery End -->

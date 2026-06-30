@@ -25,6 +25,15 @@ export default function SiteScripts() {
         if (res.ok) {
           const c = await res.json();
           applySections(root, c); // data-driven sections (programs/pricing/testimonials/faq/gallery)
+          // Gallery "View More" toggle
+          const moreBtn = root.querySelector('.gallery-more-btn');
+          const grid = root.querySelector('#galleryGrid');
+          if (moreBtn && grid) {
+            moreBtn.addEventListener('click', () => {
+              const open = grid.classList.toggle('show-all');
+              moreBtn.textContent = open ? 'View Less' : `View More (${moreBtn.dataset.total - moreBtn.dataset.shown})`;
+            });
+          }
           applyOverrides(items, c);
           // special: free-session video URL on [data-cms-href]
           if (c['video.youtube']) {

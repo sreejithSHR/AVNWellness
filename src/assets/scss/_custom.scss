@@ -172,6 +172,9 @@ body {
   }
 }
 
+// Gallery "view more" — hide extra images until expanded
+#galleryGrid:not(.show-all) .gallery-extra { display: none; }
+
 // Gallery hover
 .gallery-img {
   overflow: hidden;
