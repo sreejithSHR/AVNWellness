@@ -2,6 +2,7 @@
 import { useEffect } from 'react';
 import 'glightbox/dist/css/glightbox.min.css';
 import { collectEditable, applyOverrides } from './cmsEditable';
+import { applySections } from './sections';
 
 export default function SiteScripts() {
   useEffect(() => {
@@ -23,6 +24,7 @@ export default function SiteScripts() {
         const res = await fetch('/api/content', { cache: 'no-store' });
         if (res.ok) {
           const c = await res.json();
+          applySections(root, c); // data-driven sections (programs/pricing/testimonials/faq/gallery)
           applyOverrides(items, c);
           // special: free-session video URL on [data-cms-href]
           if (c['video.youtube']) {

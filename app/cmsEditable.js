@@ -34,6 +34,7 @@ export function collectEditable(root) {
           continue;
         }
         if (SKIP.has(tag)) continue;
+        if (child.hasAttribute && child.hasAttribute('data-cms-skip')) continue; // managed structurally (sidebar)
         if (child.classList && child.classList.contains('cms-text')) continue; // already processed
         walk(child);
       }

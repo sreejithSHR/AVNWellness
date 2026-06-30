@@ -27,13 +27,19 @@ That single server serves the homepage, `/admin`, and `/api/*`.
 
 ## 3. Admin panel — `/admin`
 
-Open `http://localhost:3000/admin` and log in with `ADMIN_USER` / `ADMIN_PASS`.
+Open `http://localhost:3000/admin` and log in with `ADMIN_USER` / `ADMIN_PASS`. The admin has a
+**sidebar** (it collapses to a ☰ menu on mobile, so the editor works on phones too):
 
 - **Visual Editor** — a live, in-place editor showing the actual homepage. **Click any text** to
-  edit it inline; **click any image** (hero, gallery, avatars, founders — all of them) to upload a
-  replacement. There's also a field for the free-session video URL. Press **Save Changes** and it's
-  live on the public site. Every section is editable — text and images are auto-detected, so nothing
-  needs to be tagged by hand.
+  edit it inline; **click any image** to upload a replacement. There's also a field for the
+  free-session video URL. Press **Save Changes** and it's live. (The repeatable sections below are
+  shown but managed from their own sidebar pages, not inline.)
+- **Programs / Pricing / Testimonials / FAQ** — card managers. **+ Add** a card, edit its fields,
+  **✕ Remove** any card, then **Save**. Programs/Pricing fields include name, tagline, accent colour,
+  icon, prices/durations, and a benefits/features list (one per line). Testimonials include a photo
+  upload and star rating. FAQ is question + answer.
+- **Gallery** — **+ Add image** (uploads) or remove images, then Save. On the site the gallery
+  images open in a **popup lightbox**.
 - **Enquiries** — every popup submission + consultation form, with name/contact/program/date.
   Toggle New ↔ Contacted, or delete.
 

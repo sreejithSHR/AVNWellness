@@ -865,7 +865,7 @@ export const homepageHtml = `
           </p>
         </div>
       </div>
-      <div class="row g-4">
+      <div class="row g-4" id="programsGrid" data-cms-skip>
         <div class="col-lg-3 col-md-6">
           <div class="card h-100 rounded-5 shadow-sm card-lift" style="border-top:4px solid #1F4A35;">
             <div class="card-body p-5 d-flex flex-column">
@@ -995,7 +995,7 @@ export const homepageHtml = `
             designed to feel like a pause from the noise of modern professional life.</p>
         </div>
       </div>
-      <div class="row g-3">
+      <div class="row g-3" id="galleryGrid" data-cms-skip>
         <div class="col-lg-3 col-md-6">
           <div class="gallery-img rounded-5 shadow-sm h-100" style="min-height: 240px;">
             <img src="/assets/images/gallery-1.jpg" alt="Mindful balance and stillness" loading="lazy">
@@ -1751,7 +1751,7 @@ export const homepageHtml = `
           </div>
         </div>
       </div>
-      <div class="row gx-4 gy-6">
+      <div class="row gx-4 gy-6" id="testimonialsGrid" data-cms-skip>
         <!-- T1 -->
         <div class="col-lg-4 col-12">
           <div class="card rounded-5 shadow-sm h-100 border">
@@ -1946,7 +1946,7 @@ export const homepageHtml = `
         </div>
       </div>
 
-      <div class="row g-4">
+      <div class="row g-4" id="pricingGrid" data-cms-skip>
         <div class="col-lg-3 col-md-6">
           <div class="card h-100 rounded-5 shadow-sm card-lift position-relative" style="border:2px solid #1F4A35;">
             <span class="badge rounded-pill text-white position-absolute top-0 start-50 translate-middle-x mt-n3 px-3 py-2 fw-semibold" style="background:#1F4A35; z-index:2; white-space:nowrap;">&starf; MOST POPULAR</span>
@@ -2225,7 +2225,7 @@ export const homepageHtml = `
       </div>
       <div class="row">
         <div class="col-lg-9 mx-auto">
-          <div class="accordion accordion-flush" id="faqAccordion">
+          <div class="accordion accordion-flush" id="faqAccordion" data-cms-skip>
             <div class="accordion-item border rounded-4 mb-3 overflow-hidden">
               <h2 class="accordion-header">
                 <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse"
