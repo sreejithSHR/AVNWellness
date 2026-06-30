@@ -16,9 +16,12 @@ export default function AdminScripts() {
       st.id = 'admin-style';
       st.textContent = `
         .admin-sidebar{width:232px;min-height:100vh;position:sticky;top:0;z-index:1040;}
-        .admin-sidebar .nav-link{color:#444;border-radius:.5rem;font-size:.92rem;}
-        .admin-sidebar .nav-link.active{background:#1F4A35;color:#fff;}
-        .admin-sidebar .nav-link:hover:not(.active){background:#f0ece2;}
+        .admin-sidebar .nav-link{color:#444 !important;border-radius:.5rem;font-size:.92rem;}
+        .admin-sidebar .nav-link.active,
+        .admin-sidebar .nav-link.active:hover,
+        .admin-sidebar .nav-link.active:focus{background:#1F4A35 !important;color:#fff !important;}
+        .admin-sidebar .nav-link:hover:not(.active),
+        .admin-sidebar .nav-link:focus:not(.active){background:#f0ece2;color:#1F4A35 !important;}
         .admin-main{padding:1.25rem 1.5rem;}
         .admin-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1035;}
         @media(max-width:991.98px){
