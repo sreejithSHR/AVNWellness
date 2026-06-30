@@ -2,6 +2,125 @@
 
 
 import "./glight.js"
+import * as bootstrap from "bootstrap";
+
+// ---- CMS: load editable content from the admin/API (silently skips if no backend) ----
+(async function () {
+  try {
+    const res = await fetch('/api/content');
+    if (!res.ok) return;
+    const c = await res.json();
+    const get = (o, p) => p.split('.').reduce((a, k) => (a == null ? a : a[k]), o);
+    document.querySelectorAll('[data-cms]').forEach((el) => {
+      const v = get(c, el.dataset.cms);
+      if (v != null && v !== '') el.textContent = v;
+    });
+    document.querySelectorAll('[data-cms-img]').forEach((el) => {
+      const v = get(c, el.dataset.cmsImg);
+      if (v) el.setAttribute('src', v);
+    });
+    document.querySelectorAll('[data-cms-href]').forEach((el) => {
+      const v = get(c, el.dataset.cmsHref);
+      if (v) el.setAttribute('href', v);
+    });
+  } catch (e) { /* offline / no backend — keep static content */ }
+})();
+
+// ---- Enquiry / consultation popup ----
+(function () {
+  const modalEl = document.getElementById('enquiryModal');
+  if (!modalEl) return;
+  const modal = new bootstrap.Modal(modalEl);
+  const form = document.getElementById('enquiryForm');
+  const success = document.getElementById('enquirySuccess');
+  const msg = document.getElementById('enquiryMsg');
+  const progField = document.getElementById('enquiryProgram');
+  const progRow = document.getElementById('enquiryProgramRow');
+  const titleEl = document.getElementById('enquiryTitle');
+
+  function open(program) {
+    form.reset();
+    form.classList.remove('d-none');
+    success.classList.add('d-none');
+    msg.textContent = '';
+    if (program) {
+      progField.value = program;
+      progRow.querySelector('strong').textContent = program;
+      progRow.classList.remove('d-none');
+      titleEl.textContent = 'Join ' + program.replace(/AVN\s+/i, '');
+    } else {
+      progField.value = '';
+      progRow.classList.add('d-none');
+      titleEl.textContent = 'Book Your Free Consultation';
+    }
+    modal.show();
+  }
+
+  // Any link to #consultation or [data-enquiry] opens the popup
+  document.querySelectorAll('a[href="#consultation"], [data-enquiry]').forEach((el) => {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      const card = el.closest('.card');
+      const program = el.dataset.program || (card && card.querySelector('h3') ? card.querySelector('h3').textContent.trim() : '');
+      open(program);
+    });
+  });
+
+  async function submit(formEl, payload, onDone) {
+    try {
+      const res = await fetch('/api/enquiries', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || 'Something went wrong.');
+      onDone(true);
+    } catch (err) {
+      onDone(false, err.message);
+    }
+  }
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = (sel) => (form.querySelector(sel) || {}).value || '';
+    msg.textContent = 'Sending…';
+    msg.className = 'small mt-3 text-muted';
+    submit(form, {
+      name: f('[name=name]'), phone: f('[name=phone]'), email: f('[name=email]'),
+      profession: f('[name=profession]'), concern: f('[name=concern]'),
+      program: progField.value, message: f('[name=message]'), source: 'popup',
+    }, (ok, error) => {
+      if (ok) {
+        form.classList.add('d-none');
+        success.classList.remove('d-none');
+      } else {
+        msg.textContent = error || 'Could not send. Please try again.';
+        msg.className = 'small mt-3 text-danger';
+      }
+    });
+  });
+
+  // Wire the consultation-section form too (if present)
+  const sectionForm = document.querySelector('#consultation form');
+  if (sectionForm) {
+    sectionForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const g = (id) => (document.getElementById(id) || {}).value || '';
+      const btn = sectionForm.querySelector('[type="submit"]');
+      const orig = btn ? btn.textContent : '';
+      if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+      submit(sectionForm, {
+        name: g('enqName'), phone: g('enqPhone'), email: g('enqEmail'),
+        profession: g('enqProfession'), concern: g('enqConcern'), source: 'contact-form',
+      }, (ok, error) => {
+        if (btn) { btn.disabled = false; btn.textContent = orig; }
+        if (ok) { sectionForm.reset(); alert('Thank you! Your enquiry has been received.'); }
+        else { alert(error || 'Could not send. Please try again.'); }
+      });
+    });
+  }
+})();
 
 // Scroll reveal animations
 (function () {

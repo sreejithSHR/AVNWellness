@@ -1,0 +1,8 @@
+// Next.js global stylesheet entry (compiled to app/site.css).
+// Same as style.scss but without the @tabler/icons-webfont import — the site uses inline SVGs.
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Mulish:wght@300;400;500;600;700&display=swap');
+
+@import "bootstrap/scss/functions";
+@import "./variables";
+@import "bootstrap/scss/bootstrap";
+@import "./custom";

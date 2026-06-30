@@ -13,6 +13,10 @@ export default defineConfig({
     port: 3000,
     hot: true,
     open: true,
+    proxy: {
+      '/api': 'http://localhost:5000',
+      '/uploads': 'http://localhost:5000',
+    },
   },
   css: {
     preprocessorOptions: {

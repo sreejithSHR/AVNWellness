@@ -1,21 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <title>Ayur Vidya Nikethan (AVN) — Centre for Integrated Wellness | Yoga &amp; Wellness for Professionals</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description"
-    content="Ayur Vidya Nikethan (AVN) — Integrated yogic wellness for busy, high-responsibility professionals. Stress relief, posture recovery, sleep &amp; burnout recovery and complete wellness transformation through Yoga, Meditation &amp; conscious living." />
-  <link rel="apple-touch-icon" sizes="180x180" href="./assets/images/favicon_io/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon_io/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="./assets/images/favicon_io/favicon-16x16.png">
-  <link rel="manifest" href="./assets/images/favicon_io/site.webmanifest">
-
-</head>
-
-<body>
-  <!-- Reusable AVN ring mark (concentric arcs) -->
+export const homepageHtml = `
+<!-- Reusable AVN ring mark (concentric arcs) -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <symbol id="avn-rings" viewBox="0 0 200 200" fill="none" stroke="currentColor" stroke-linecap="round">
       <path d="M 114.72 116.35 A 22 22 0 1 1 121.52 95.43" />
@@ -438,7 +422,7 @@
 
         <div class="col-lg-6">
           <div class="position-relative">
-            <img src="./assets/images/hero-img.jpg" alt="Professional practising guided meditation"
+            <img src="/assets/images/hero-img.jpg" alt="Professional practising guided meditation"
               class="img-fluid rounded-5 shadow-lg w-100" style="aspect-ratio: 4/3.4; object-fit: cover;"
               data-cms-img="hero.image">
             <!-- floating quote card -->
@@ -584,7 +568,7 @@
             class="glightbox card border-0 shadow-lg rounded-5 overflow-hidden d-block text-decoration-none card-lift position-relative"
             aria-label="Play the free 45-minute wellness session">
             <div class="position-relative">
-              <img src="./assets/images/video-band.jpg" alt="Free 45-minute guided wellness session preview"
+              <img src="/assets/images/video-band.jpg" alt="Free 45-minute guided wellness session preview"
                 class="img-fluid w-100" style="aspect-ratio: 16/9; object-fit: cover;">
               <span class="position-absolute top-0 start-0 m-4 badge bg-dark bg-opacity-50 text-white rounded-pill px-3 py-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
@@ -1014,32 +998,32 @@
       <div class="row g-3">
         <div class="col-lg-3 col-md-6">
           <div class="gallery-img rounded-5 shadow-sm h-100" style="min-height: 240px;">
-            <img src="./assets/images/gallery-1.jpg" alt="Mindful balance and stillness" loading="lazy">
+            <img src="/assets/images/gallery-1.jpg" alt="Mindful balance and stillness" loading="lazy">
           </div>
         </div>
         <div class="col-lg-6 col-md-6">
           <div class="gallery-img rounded-5 shadow-sm h-100" style="min-height: 240px;">
-            <img src="./assets/images/gallery-2.jpg" alt="Outdoor guided yoga practice" loading="lazy">
+            <img src="/assets/images/gallery-2.jpg" alt="Outdoor guided yoga practice" loading="lazy">
           </div>
         </div>
         <div class="col-lg-3 col-md-6">
           <div class="gallery-img rounded-5 shadow-sm h-100" style="min-height: 240px;">
-            <img src="./assets/images/gallery-6.jpg" alt="Meditation and inner calm" loading="lazy">
+            <img src="/assets/images/gallery-6.jpg" alt="Meditation and inner calm" loading="lazy">
           </div>
         </div>
         <div class="col-lg-3 col-md-6">
           <div class="gallery-img rounded-5 shadow-sm h-100" style="min-height: 240px;">
-            <img src="./assets/images/gallery-4.jpg" alt="Nature and forest serenity" loading="lazy">
+            <img src="/assets/images/gallery-4.jpg" alt="Nature and forest serenity" loading="lazy">
           </div>
         </div>
         <div class="col-lg-3 col-md-6">
           <div class="gallery-img rounded-5 shadow-sm h-100" style="min-height: 240px;">
-            <img src="./assets/images/gallery-3.jpg" alt="Studio yoga practice" loading="lazy">
+            <img src="/assets/images/gallery-3.jpg" alt="Studio yoga practice" loading="lazy">
           </div>
         </div>
         <div class="col-lg-6 col-md-12">
           <div class="gallery-img rounded-5 shadow-sm h-100" style="min-height: 240px;">
-            <img src="./assets/images/gallery-5.jpg" alt="Outdoor meditation at sunrise" loading="lazy">
+            <img src="/assets/images/gallery-5.jpg" alt="Outdoor meditation at sunrise" loading="lazy">
           </div>
         </div>
       </div>
@@ -1054,7 +1038,7 @@
       <div class="row align-items-center gy-8">
         <div class="col-lg-6">
           <div class="position-relative">
-            <img src="./assets/images/experience-img.jpg" alt="AVN guided wellness class"
+            <img src="/assets/images/experience-img.jpg" alt="AVN guided wellness class"
               class="img-fluid rounded-5 shadow-sm">
             <div class="position-absolute bottom-0 start-0 ms-md-n6 mb-n6 d-none d-md-block">
               <div class="bg-white shadow rounded-4 d-flex align-items-center gap-3 px-4 py-3 border">
@@ -1322,7 +1306,7 @@
 
   <!-- Quote / Stats Parallax Band Start -->
   <section class="position-relative bg-cover bg-fixed overlay-primary py-lg-13 py-11 overflow-hidden"
-    style="background-image: url('./assets/images/quote-band.jpg');">
+    style="background-image: url('/assets/images/quote-band.jpg');">
     <svg class="ring-decor ring-decor-light d-none d-md-block" style="width:420px;height:420px;top:-130px;right:-120px;z-index:1;"><use href="#avn-rings" /></svg>
     <svg class="ring-decor ring-decor-light d-none d-lg-block" style="width:320px;height:320px;bottom:-120px;left:-100px;z-index:1;transform:scaleX(-1);"><use href="#avn-rings" /></svg>
     <div class="container overlay-content">
@@ -1659,7 +1643,7 @@
           <div class="card h-100 rounded-5 shadow-sm card-lift">
             <div class="card-body p-6">
               <div class="d-flex flex-column flex-sm-row align-items-center text-center text-sm-start gap-4 mb-4">
-                <img src="./assets/images/founder-lijoy.jpg" alt="Yogacharya Lijoy Raj C.R."
+                <img src="/assets/images/founder-lijoy.jpg" alt="Yogacharya Lijoy Raj C.R."
                   class="rounded-circle flex-shrink-0 border border-3 border-gold border-opacity-25"
                   style="width: 116px; height: 116px; object-fit: cover;">
                 <div>
@@ -1706,7 +1690,7 @@
           <div class="card h-100 rounded-5 shadow-sm card-lift">
             <div class="card-body p-6">
               <div class="d-flex flex-column flex-sm-row align-items-center text-center text-sm-start gap-4 mb-4">
-                <img src="./assets/images/founder-leema.jpg" alt="Mrs. Leema Prasad"
+                <img src="/assets/images/founder-leema.jpg" alt="Mrs. Leema Prasad"
                   class="rounded-circle flex-shrink-0 border border-3 border-gold border-opacity-25"
                   style="width: 116px; height: 116px; object-fit: cover;">
                 <div>
@@ -1786,7 +1770,7 @@
                 weeks I sleep better, react calmer, and finally feel in control of my mind again."</p>
               <div class="mt-7 pt-5 border-top">
                 <div class="d-flex gap-3 align-items-center">
-                  <img src="./assets/images/avatar/avatar-1.jpg" alt="" class="avatar avatar-md rounded-circle">
+                  <img src="/assets/images/avatar/avatar-1.jpg" alt="" class="avatar avatar-md rounded-circle">
                   <div>
                     <h6 class="mb-0">Rahul Menon</h6>
                     <small>Banking Professional, Kochi</small>
@@ -1814,7 +1798,7 @@
                 practical stretches I actually use. The posture correction is a game-changer."</p>
               <div class="mt-7 pt-5 border-top">
                 <div class="d-flex gap-3 align-items-center">
-                  <img src="./assets/images/avatar/avatar-2.jpg" alt="" class="avatar avatar-md rounded-circle">
+                  <img src="/assets/images/avatar/avatar-2.jpg" alt="" class="avatar avatar-md rounded-circle">
                   <div>
                     <h6 class="mb-0">Anjali Sharma</h6>
                     <small>IT Professional, Bengaluru</small>
@@ -1842,7 +1826,7 @@
                 Recovery program helped me rebuild deep sleep and steady energy. I feel human again."</p>
               <div class="mt-7 pt-5 border-top">
                 <div class="d-flex gap-3 align-items-center">
-                  <img src="./assets/images/avatar/avatar-3.jpg" alt="" class="avatar avatar-md rounded-circle">
+                  <img src="/assets/images/avatar/avatar-3.jpg" alt="" class="avatar avatar-md rounded-circle">
                   <div>
                     <h6 class="mb-0">Dr. Vivek Nair</h6>
                     <small>Healthcare Professional, Chennai</small>
@@ -1870,7 +1854,7 @@
                 missed a day. Beginner-friendly and genuinely calming."</p>
               <div class="mt-7 pt-5 border-top">
                 <div class="d-flex gap-3 align-items-center">
-                  <img src="./assets/images/avatar/avatar-4.jpg" alt="" class="avatar avatar-md rounded-circle">
+                  <img src="/assets/images/avatar/avatar-4.jpg" alt="" class="avatar avatar-md rounded-circle">
                   <div>
                     <h6 class="mb-0">Meera Krishnan</h6>
                     <small>Educator, Trivandrum</small>
@@ -1898,7 +1882,7 @@
                 calmer mind and a sustainable lifestyle I can actually maintain while running a business."</p>
               <div class="mt-7 pt-5 border-top">
                 <div class="d-flex gap-3 align-items-center">
-                  <img src="./assets/images/avatar/avatar-5.jpg" alt="" class="avatar avatar-md rounded-circle">
+                  <img src="/assets/images/avatar/avatar-5.jpg" alt="" class="avatar avatar-md rounded-circle">
                   <div>
                     <h6 class="mb-0">Suresh Pillai</h6>
                     <small>Entrepreneur, Dubai</small>
@@ -1926,7 +1910,7 @@
                 just safe, structured guidance that respects a demanding executive schedule."</p>
               <div class="mt-7 pt-5 border-top">
                 <div class="d-flex gap-3 align-items-center">
-                  <img src="./assets/images/avatar/avatar-6.jpg" alt="" class="avatar avatar-md rounded-circle">
+                  <img src="/assets/images/avatar/avatar-6.jpg" alt="" class="avatar avatar-md rounded-circle">
                   <div>
                     <h6 class="mb-0">Priya Raghavan</h6>
                     <small>Senior Manager, Singapore</small>
@@ -2099,8 +2083,8 @@
             <div class="col-lg-7">
               <div class="d-flex align-items-center gap-4">
                 <div class="avatar-group flex-shrink-0 d-none d-sm-flex">
-                  <img src="./assets/images/founder-lijoy.jpg" class="avatar avatar-lg rounded-circle border border-2 border-white" alt="">
-                  <img src="./assets/images/founder-leema.jpg" class="avatar avatar-lg rounded-circle border border-2 border-white" alt="">
+                  <img src="/assets/images/founder-lijoy.jpg" class="avatar avatar-lg rounded-circle border border-2 border-white" alt="">
+                  <img src="/assets/images/founder-leema.jpg" class="avatar avatar-lg rounded-circle border border-2 border-white" alt="">
                 </div>
                 <div>
                   <h3 class="h5 fw-bold mb-1">Not sure which program is right for you?</h3>
@@ -2534,7 +2518,4 @@
   </div>
 
   <!-- Bootstrap JS -->
-  <script src="./assets/js/main.js" type="module"></script>
-</body>
-
-</html>
+`;
