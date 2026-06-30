@@ -14,28 +14,31 @@ $gray-950: #0a0a0a !default;
 
 $orange:       #E08A4B !default;
 $red:          #C5705D !default;
-$green:        #2F8F6B !default; // calming wellness jade green
+$green:        #1F4A35 !default; // deep forest green
 $cyan:         #4FA8A0 !default;
-$yellow:       #E0A82E !default;
-
+$gold:         #C2A35A !default; // warm gold accent
+$yellow:       $gold !default;
+$cream:        #FCFAF4 !default; // soft light cream background
+$cream-200:    #F4EFE3 !default; // gentle cream for light surfaces
 
 $primary:       $green !default;
-$secondary:     $gray-200 !default;
+$secondary:     $gold !default;
 $success:       $green !default;
 $info:          $cyan !default;
-$warning:       $yellow !default;
+$warning:       $gold !default;
 $danger:        $red !default;
 
 $min-contrast-ratio:   2 !default;
 $link-hover-decoration:                   none !default;
 $link-color:                              $gray-700 !default;
 $link-hover-color:                        $primary !default;
-$headings-color:              $gray-900 !default;
-$body-color:                  $gray-600 !default;
+$headings-color:              $green !default;
+$body-color:                  #5b5648 !default;
 
-$light: $gray-100 !default;
-$border-color: $gray-200 !default;
-$border-color-translucent:   $gray-200 !default;
+$body-bg: $cream !default;
+$light: $cream-200 !default;
+$border-color: #E3D9C4 !default;
+$border-color-translucent:   #E3D9C4 !default;
 
 $enable-negative-margins: true !default;
 $enable-rounded:              true !default;
@@ -93,7 +96,8 @@ $spacers: (
    ) !default;
 // scss-docs-end spacer-variables-maps
 
-$font-family-base: 'Geist', sans-serif !default;
+$font-family-base: 'Mulish', sans-serif !default;
+$headings-font-family: 'Fraunces', Georgia, serif !default;
 $font-size-root:              null !default;
 $font-size-base:              .975rem !default; // Assumes the browser default, typically `16px`
 $font-size-sm:                $font-size-base * .85 !default;

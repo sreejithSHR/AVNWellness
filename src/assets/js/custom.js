@@ -3,6 +3,44 @@
 
 import "./glight.js"
 
+// Scroll reveal animations
+(function () {
+  if (!('IntersectionObserver' in window)) return;
+  document.body.classList.add('reveal-ready');
+
+  const els = new Set();
+  [
+    'section .row.text-center > [class*="col-"]',
+    '.row > [class*="col-"] > .card',
+    'section .bg-primary.rounded-5',
+    '[data-reveal]'
+  ].forEach(sel => document.querySelectorAll(sel).forEach(e => els.add(e)));
+
+  els.forEach(e => e.classList.add('reveal'));
+
+  // Stagger cards within each row by column index
+  document.querySelectorAll('.row').forEach(row => {
+    Array.from(row.children).forEach((col, idx) => {
+      const t = col.querySelector(':scope > .card.reveal') || (col.classList.contains('reveal') ? col : null);
+      if (t) t.style.transitionDelay = ((idx % 4) * 0.09).toFixed(2) + 's';
+    });
+  });
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(en => {
+      if (en.isIntersecting) {
+        en.target.classList.add('in');
+        io.unobserve(en.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -5% 0px' });
+
+  els.forEach(e => io.observe(e));
+
+  // Safety: reveal everything after 4s in case something stalls
+  setTimeout(() => els.forEach(e => e.classList.add('in')), 4000);
+})();
+
 
 
   // Smooth Scroll
