@@ -97,11 +97,12 @@ export default function AdminScripts() {
     const SCHEMAS = {
       programs: { title: 'Programs', fields: [
         { k: 'name', label: 'Name' }, { k: 'tagline', label: 'Tagline' },
+        { k: 'photo', label: 'Photo', type: 'image' },
         { k: 'accent', label: 'Accent colour', type: 'select', opts: ACCENT_NAMES },
         { k: 'icon', label: 'Icon', type: 'select', opts: ICON_NAMES },
         { k: 'duration', label: 'Duration' }, { k: 'time', label: 'Time / Day' }, { k: 'schedule', label: 'Schedule' },
         { k: 'benefits', label: 'Key Benefits (one per line)', type: 'lines' }, { k: 'bestFor', label: 'Best For', type: 'textarea' },
-      ], blank: { accent: 'green', icon: 'yoga', name: 'New Program', tagline: 'Short tagline.', duration: '8 Weeks', time: '60 Min', schedule: '5 Days/Wk', benefits: ['Benefit one', 'Benefit two'], bestFor: 'Who this is for' } },
+      ], blank: { accent: 'green', icon: 'yoga', photo: '/assets/images/program-1.jpg', name: 'New Program', tagline: 'Short tagline.', duration: '8 Weeks', time: '60 Min', schedule: '5 Days/Wk', benefits: ['Benefit one', 'Benefit two'], bestFor: 'Who this is for' } },
       pricing: { title: 'Pricing', fields: [
         { k: 'name', label: 'Name' }, { k: 'tagline', label: 'Tagline' },
         { k: 'accent', label: 'Accent colour', type: 'select', opts: ACCENT_NAMES },
@@ -112,9 +113,12 @@ export default function AdminScripts() {
       ], blank: { accent: 'green', icon: 'yoga', badge: '', name: 'New Plan', tagline: '', price: '1999', regular: '6999', save: '71', intl: '$25', features: ['Feature one', 'Feature two'] } },
       testimonials: { title: 'Testimonials', fields: [
         { k: 'name', label: 'Name' }, { k: 'role', label: 'Role / Location' },
-        { k: 'stars', label: 'Stars (1–5)' }, { k: 'quote', label: 'Quote', type: 'textarea' },
+        { k: 'age', label: 'Age' }, { k: 'stars', label: 'Stars (1–5)' },
+        { k: 'programTaken', label: 'Program Taken' },
+        { k: 'healthIssues', label: 'Health Issues' },
+        { k: 'benefitsGained', label: 'Benefits Gained' },
         { k: 'avatar', label: 'Photo', type: 'image' },
-      ], blank: { stars: 5, name: 'New Name', role: 'Role, City', quote: '"A wonderful experience."', avatar: '/assets/images/avatar/avatar-1.jpg' } },
+      ], blank: { stars: 5, name: 'New Name', role: 'Role, City', age: '35', programTaken: 'Professional Stress Reset', healthIssues: 'Stress, Poor Sleep', benefitsGained: 'Better sleep, Calmer mind', avatar: '/assets/images/avatar/avatar-1.jpg' } },
       faq: { title: 'FAQ', fields: [
         { k: 'q', label: 'Question' }, { k: 'a', label: 'Answer', type: 'textarea' },
       ], blank: { q: 'New question?', a: 'Answer goes here.' } },

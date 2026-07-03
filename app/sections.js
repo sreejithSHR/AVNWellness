@@ -27,21 +27,24 @@ export function renderPrograms(list) {
     const a = acc(c.accent);
     const benefits = (c.benefits || []).map((b) => `<li class="d-flex gap-2"><span style="color:${a};">${CHECK}</span><span>${E(b)}</span></li>`).join('');
     return `<div class="col-lg-3 col-md-6">
-      <div class="card h-100 rounded-5 shadow-sm card-lift" style="border-top:4px solid ${a};">
-        <div class="card-body p-5 d-flex flex-column">
-          <span class="icon-shape icon-lg rounded-circle text-white mb-4" style="background:${a};box-shadow:0 0 0 4px ${a}33;">${ic(c.icon)}</span>
-          <h3 class="h6 fw-bold mb-2" style="min-height:3rem;">${E(c.name)}</h3>
-          <p class="small text-muted mb-4">${E(c.tagline)}</p>
-          <div class="d-flex justify-content-between text-center rounded-3 p-3 mb-4" style="background:${a}12;">
-            <div><span style="color:${a};">${CAL}</span><div class="text-muted" style="font-size:10px;">Duration</div><div class="fw-bold" style="font-size:12px;">${E(c.duration)}</div></div>
-            <div class="border-start border-end px-2"><span style="color:${a};">${CLK}</span><div class="text-muted" style="font-size:10px;">Time / Day</div><div class="fw-bold" style="font-size:12px;">${E(c.time || '60 Min')}</div></div>
-            <div><span style="color:${a};">${CAL}</span><div class="text-muted" style="font-size:10px;">Schedule</div><div class="fw-bold" style="font-size:12px;">${E(c.schedule || '5 Days/Wk')}</div></div>
+      <div class="card h-100 rounded-5 shadow-sm card-lift program-card position-relative overflow-hidden" style="border-top:4px solid ${a};">
+        ${c.photo ? `<img src="${E(c.photo)}" alt="${E(c.name)}" class="program-photo" style="position:absolute;top:0;right:0;width:46%;height:170px;object-fit:cover;object-position:top center;-webkit-mask-image:linear-gradient(to left,#000 30%,transparent 85%);mask-image:linear-gradient(to left,#000 30%,transparent 85%);">` : ''}
+        <div class="card-body p-5 d-flex flex-column position-relative">
+          <div style="min-height:176px;max-width:56%;">
+            <span class="icon-shape icon-lg rounded-circle text-white mb-3" style="background:${a};box-shadow:0 0 0 4px ${a}33;">${ic(c.icon)}</span>
+            <h3 class="fw-bold mb-0 lh-sm" style="font-size:1.15rem;color:${a};">${E(c.name)}</h3>
           </div>
-          <h4 class="text-uppercase fw-bold mb-3" style="color:${a};font-size:12px;letter-spacing:.06rem;">Key Benefits</h4>
-          <ul class="list-unstyled d-flex flex-column gap-2 small mb-4">${benefits}</ul>
+          <p class="text-muted mb-4" style="font-size:.9rem;">${E(c.tagline)}</p>
+          <div class="d-flex justify-content-between text-center rounded-3 p-3 mb-4" style="background:${a}12;">
+            <div><span style="color:${a};">${CAL}</span><div class="text-muted" style="font-size:11px;">Duration</div><div class="fw-bold" style="font-size:13px;">${E(c.duration)}</div></div>
+            <div class="border-start border-end px-2"><span style="color:${a};">${CLK}</span><div class="text-muted" style="font-size:11px;">Time / Day</div><div class="fw-bold" style="font-size:13px;">${E(c.time || '60 Min')}</div></div>
+            <div><span style="color:${a};">${CAL}</span><div class="text-muted" style="font-size:11px;">Schedule</div><div class="fw-bold" style="font-size:13px;">${E(c.schedule || '5 Days/Wk')}</div></div>
+          </div>
+          <h4 class="text-uppercase fw-bold mb-3" style="color:${a};font-size:13px;letter-spacing:.06rem;">Key Benefits</h4>
+          <ul class="list-unstyled d-flex flex-column gap-2 mb-4" style="font-size:.9rem;">${benefits}</ul>
           <div class="mt-auto">
-            <span class="badge rounded-pill text-white mb-2 d-inline-flex align-items-center gap-1" style="background:${a};"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg> Best For</span>
-            <p class="text-muted mb-0" style="font-size:12px;">${E(c.bestFor)}</p>
+            <span class="badge rounded-pill text-white mb-2 d-inline-flex align-items-center gap-1" style="background:${a};font-size:12px;"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg> Best For</span>
+            <p class="text-muted mb-0" style="font-size:13px;">${E(c.bestFor)}</p>
           </div>
         </div>
       </div>
@@ -94,20 +97,39 @@ export function renderFaq(list) {
     </div>`).join('');
 }
 
+const T_GRAD = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6"/><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"/></svg>';
+const T_HEART = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"/></svg>';
+const T_CHECKC = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 12l2 2l4 -4"/></svg>';
+const T_USER = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/></svg>';
+
 export function renderTestimonials(list) {
   return (list || []).map((t) => {
     const stars = STAR.repeat(Math.max(0, Math.min(5, parseInt(t.stars, 10) || 5)));
     const avatar = t.avatar || '/assets/images/avatar/avatar-1.jpg';
-    return `<div class="col-lg-4 col-12">
+    return `<div class="col-lg-4 col-md-6 col-12">
       <div class="card rounded-5 shadow-sm h-100 border">
-        <div class="card-body p-6">
-          <div class="d-flex gap-0 align-items-center">${stars}</div>
-          <div class="mt-4 mb-2">${QUOTE}</div>
-          <p class="fw-semibold">${E(t.quote)}</p>
-          <div class="mt-7 pt-5 border-top">
-            <div class="d-flex gap-3 align-items-center">
-              <img src="${E(avatar)}" alt="" class="avatar avatar-md rounded-circle">
-              <div><h6 class="mb-0">${E(t.name)}</h6><small>${E(t.role)}</small></div>
+        <div class="card-body p-5">
+          <div class="d-flex align-items-start gap-3 mb-3">
+            <img src="${E(avatar)}" alt="${E(t.name)}" class="rounded-circle flex-shrink-0 shadow-sm" style="width:64px;height:64px;object-fit:cover;">
+            <div class="flex-grow-1 lh-sm">
+              <div class="d-flex justify-content-between align-items-start gap-2">
+                <h6 class="mb-1 fw-bold">${E(t.name)}</h6>
+                <span class="d-flex flex-shrink-0">${stars}</span>
+              </div>
+              <small class="text-muted d-block">${E(t.role)}</small>
+              ${t.age ? `<small class="text-muted d-inline-flex align-items-center gap-1 mt-1">${T_USER} Age ${E(t.age)}</small>` : ''}
+            </div>
+          </div>
+          <div class="border-top pt-4 row g-3 small">
+            <div class="col-7">
+              <div class="fw-semibold d-flex gap-1 align-items-center mb-1" style="color:${ACCENTS.green};">${T_GRAD} Program Taken</div>
+              <div class="text-muted mb-3">${E(t.programTaken)}</div>
+              <div class="fw-semibold d-flex gap-1 align-items-center mb-1 text-gold">${T_HEART} Health Issues</div>
+              <div class="text-muted">${E(t.healthIssues)}</div>
+            </div>
+            <div class="col-5">
+              <div class="fw-semibold d-flex gap-1 align-items-center mb-1 text-primary">${T_CHECKC} Benefits Gained</div>
+              <div class="text-muted">${E(t.benefitsGained)}</div>
             </div>
           </div>
         </div>
