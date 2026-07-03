@@ -13,6 +13,12 @@ export const homepageHtml = `
   .text-muted{color:#565656 !important;}
   section p{line-height:1.65;}
   .program-photo{pointer-events:none;}
+  /* Hero full-bleed image */
+  .hero-top{position:relative;}
+  .hero-img-bleed{position:absolute;top:0;right:0;height:100%;width:48%;}
+  .hero-img-bleed > img{width:100%;height:100%;object-fit:cover;border-top-left-radius:2rem;border-bottom-left-radius:2rem;box-shadow:0 24px 60px rgba(0,0,0,.14);}
+  .hero-quote-card{position:absolute;top:42%;left:0;transform:translateX(-40%);max-width:236px;}
+  @media (max-width:991.98px){.hero-img-bleed{display:none;}}
 </style>
 <!-- Reusable AVN ring mark (concentric arcs) -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -346,201 +352,98 @@ export const homepageHtml = `
   </nav>
 
   <!-- Hero Start -->
-  <section class="pt-lg-12 pt-8 pb-lg-11 pb-8 bg-cream position-relative overflow-hidden" id="hero">
+  <section class="bg-cream position-relative overflow-hidden" id="hero">
     <div class="leaf-bg d-none d-md-block"></div>
-    <svg class="mandala-decor d-none d-md-block" style="width:min(60vw,860px);height:min(60vw,860px);top:50%;left:-200px;transform:translateY(-50%);"><use href="#avn-mandala" /></svg>
-    <svg class="mandala-decor d-none d-lg-block" style="width:520px;height:520px;top:-220px;right:-180px;"><use href="#avn-mandala" /></svg>
-    <div class="container position-relative">
-      <div class="row align-items-center gy-8">
-        <div class="col-lg-6">
-          <span
-            class="badge bg-white text-primary px-4 py-2 fw-normal border border-2 rounded-pill d-inline-flex align-items-center gap-2 mw-100 text-wrap text-start lh-sm"
-            style="border-color: rgba(194,163,90,.5)!important;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-              class="icon icon-tabler icons-tabler-outline icon-tabler-leaf text-gold">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-              <path d="M5 21c.5 -4.5 2.5 -8 7 -10" />
-              <path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z" />
-            </svg>
-            <span data-cms="hero.badge">Integrated Yogic Wellness for High-Responsibility Living</span></span>
-          <h1 class="fw-bold mt-5 mb-4 lh-1" style="font-size: clamp(2.3rem, 6vw, 4.2rem);">
-            <span data-cms="hero.title1">Feel Better.</span><br>
-            <span data-cms="hero.title2">Sleep Better.</span><br>
-            <span class="text-gold" data-cms="hero.title3">Perform Better.</span>
-          </h1>
+    <svg class="mandala-decor d-none d-lg-block" style="width:520px;height:520px;top:-220px;right:-180px;opacity:.5;"><use href="#avn-mandala" /></svg>
 
-          <p class="lead fw-normal mb-5" style="max-width: 480px;" data-cms="hero.subtitle">
-            Evidence-Informed Yoga &amp; Wellness Programs for Busy Professionals Worldwide.
-          </p>
+    <!-- Top: text (left) + full-bleed image (right) -->
+    <div class="hero-top pt-lg-12 pt-8 pb-lg-8 pb-6">
+      <div class="container position-relative" style="z-index:2;">
+        <div class="row">
+          <div class="col-lg-6">
+            <span class="badge bg-white text-primary px-4 py-2 fw-normal border border-2 rounded-pill d-inline-flex align-items-center gap-2 mw-100 text-wrap text-start lh-sm mb-4" style="border-color: rgba(194,163,90,.5)!important;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gold"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 21c.5 -4.5 2.5 -8 7 -10"/><path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/></svg>
+              <span data-cms="hero.badge">Integrated Yogic Wellness for High-Responsibility Living</span></span>
 
-          <div class="row g-3 mb-6 d-none d-md-flex" style="max-width: 600px;">
-            <div class="col-6 col-md-4">
-              <div class="d-flex align-items-center gap-2"><span class="check-circle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg></span><span>Reduce Stress</span></div>
-            </div>
-            <div class="col-6 col-md-4">
-              <div class="d-flex align-items-center gap-2"><span class="check-circle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg></span><span>Sleep Better</span></div>
-            </div>
-            <div class="col-6 col-md-4">
-              <div class="d-flex align-items-center gap-2"><span class="check-circle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg></span><span>Restore Energy</span></div>
-            </div>
-            <div class="col-6 col-md-4">
-              <div class="d-flex align-items-center gap-2"><span class="check-circle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg></span><span>Eliminate Neck &amp; Back Pain</span></div>
-            </div>
-            <div class="col-6 col-md-4">
-              <div class="d-flex align-items-center gap-2"><span class="check-circle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg></span><span>Live Online</span></div>
-            </div>
-            <div class="col-6 col-md-4">
-              <div class="d-flex align-items-center gap-2"><span class="check-circle"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l5 5l10 -10"/></svg></span><span>Personal Guidance</span></div>
-            </div>
-          </div>
+            <h1 class="fw-bold mb-4 lh-1" style="font-size: clamp(2.5rem, 6vw, 4.4rem);">
+              <span data-cms="hero.title1">Feel Better.</span><br>
+              <span data-cms="hero.title2">Sleep Better.</span><br>
+              <span class="text-gold" data-cms="hero.title3">Perform Better.</span>
+            </h1>
 
-          <div class="d-flex gap-2 gap-md-3 mb-5">
-            <a href="#consultation"
-              class="btn btn-primary btn-bordered-gold flex-fill flex-md-grow-0 d-inline-flex align-items-center justify-content-center gap-2 px-3 px-md-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="flex-shrink-0">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z" />
-                <path d="M16 3v4" /><path d="M8 3v4" /><path d="M4 11h16" />
-              </svg>
-              <span>Book Your Complimentary Wellness Strategy Session</span>
-            </a>
-            <a href="https://www.youtube.com/watch?v=v7AYKMP6rOE" data-cms-href="video.youtube"
-              class="btn bg-white border shadow-sm glightbox flex-fill flex-md-grow-0 d-inline-flex align-items-center justify-content-center gap-2 px-3 px-md-4">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"
-                class="text-primary flex-shrink-0">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M6 4v16a1 1 0 0 0 1.524 .852l13 -8a1 1 0 0 0 0 -1.704l-13 -8a1 1 0 0 0 -1.524 .852z" />
-              </svg>
-              <span>Watch Free Wellness Session</span>
-            </a>
-          </div>
+            <p class="lead fw-normal mb-4" style="max-width: 480px;" data-cms="hero.subtitle">Evidence-Informed Yoga &amp; Wellness Programs for Busy Professionals Worldwide.</p>
 
-          <div
-            class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-start column-gap-3 row-gap-2 small text-muted">
-            <span class="d-inline-flex align-items-center gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="icon icon-tabler icons-tabler-outline icon-tabler-shield-check text-primary">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3" />
-                <path d="M9 12l2 2l4 -4" />
-              </svg>
-              <span class="fw-semibold text-dark">Trusted by Professionals</span>
-            </span>
-            <span class="d-inline-flex align-items-center gap-2"><span class="text-gold">•</span> Evidence-Informed</span>
-            <span class="d-inline-flex align-items-center gap-2"><span class="text-gold">•</span> Globally Accessible</span>
-          </div>
-        </div>
+            <div class="row g-3 mb-5" style="max-width: 560px;">
+              <div class="col-6 col-md-4"><div class="d-flex align-items-center gap-2"><span class="text-primary flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2l4 -4"/></svg></span><span class="fw-medium" style="font-size:.95rem;">Reduce Stress</span></div></div>
+              <div class="col-6 col-md-4"><div class="d-flex align-items-center gap-2"><span class="text-primary flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2l4 -4"/></svg></span><span class="fw-medium" style="font-size:.95rem;">Sleep Better</span></div></div>
+              <div class="col-6 col-md-4"><div class="d-flex align-items-center gap-2"><span class="text-primary flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2l4 -4"/></svg></span><span class="fw-medium" style="font-size:.95rem;">Restore Energy</span></div></div>
+              <div class="col-6 col-md-4"><div class="d-flex align-items-center gap-2"><span class="text-primary flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2l4 -4"/></svg></span><span class="fw-medium" style="font-size:.95rem;">Eliminate Neck &amp; Back Pain</span></div></div>
+              <div class="col-6 col-md-4"><div class="d-flex align-items-center gap-2"><span class="text-primary flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2l4 -4"/></svg></span><span class="fw-medium" style="font-size:.95rem;">Live Online</span></div></div>
+              <div class="col-6 col-md-4"><div class="d-flex align-items-center gap-2"><span class="text-primary flex-shrink-0"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2l4 -4"/></svg></span><span class="fw-medium" style="font-size:.95rem;">Personal Guidance</span></div></div>
+            </div>
 
-        <div class="col-lg-6">
-          <div class="position-relative">
-            <img src="/assets/images/hero-img.jpg" alt="Professional practising guided meditation"
-              class="img-fluid rounded-5 shadow-lg w-100" style="aspect-ratio: 4/3.4; object-fit: cover;"
-              data-cms-img="hero.image">
-            <!-- floating quote card -->
-            <div class="position-absolute bottom-0 end-0 mb-5 me-n3 me-lg-n5 bg-white shadow-lg rounded-4 p-4 d-none d-sm-block"
-              style="max-width: 230px; border-top: 3px solid #C2A35A;">
-              <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
-                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="icon icon-tabler icons-tabler-outline icon-tabler-quote text-gold mb-2">
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5" />
-                <path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5" />
-              </svg>
-              <p class="mb-0 fw-semibold lh-sm" data-cms="hero.quote">Wellness is not a luxury. It's a way of living
-                with clarity, energy and balance.</p>
+            <div class="d-flex flex-column flex-sm-row gap-3 mb-4">
+              <a href="#consultation" class="btn btn-primary btn-bordered-gold rounded-pill d-inline-flex align-items-center justify-content-center gap-2 px-4 py-3 lh-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></svg>
+                <span class="fw-semibold">Book Your Complimentary<br class="d-none d-sm-block">Wellness Strategy Session</span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gold flex-shrink-0"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg>
+              </a>
+              <a href="https://www.youtube.com/watch?v=v7AYKMP6rOE" data-cms-href="video.youtube" class="btn bg-white border shadow-sm rounded-pill glightbox d-inline-flex align-items-center justify-content-center gap-2 px-4 py-3 lh-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" class="text-primary flex-shrink-0"><circle cx="12" cy="12" r="9"/><path d="M10 9l5 3l-5 3z" fill="currentColor" stroke="none"/></svg>
+                <span class="fw-semibold text-primary">Watch Free<br class="d-none d-sm-block">Wellness Session</span>
+              </a>
+            </div>
+
+            <div class="d-flex flex-wrap align-items-center column-gap-3 row-gap-2 small text-muted">
+              <span class="d-inline-flex align-items-center gap-2"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-primary"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/><path d="M9 12l2 2l4 -4"/></svg><span class="fw-semibold text-dark">Trusted by Professionals</span></span>
+              <span class="d-inline-flex align-items-center gap-2"><span class="text-gold">&bull;</span> Evidence-Informed</span>
+              <span class="d-inline-flex align-items-center gap-2"><span class="text-gold">&bull;</span> Globally Accessible</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Stats Band -->
-      <div class="row mt-lg-11 mt-8">
-        <div class="col-12">
-          <div class="bg-white rounded-5 shadow-sm border p-lg-7 p-5">
-            <div class="row gx-4 gy-6 text-center text-md-start">
-              <div class="col-lg-3 col-md-6">
-                <div class="d-flex flex-column flex-md-row align-items-center gap-3 text-center text-md-start justify-content-md-start">
-                  <span class="stat-icon flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                      class="icon icon-tabler icons-tabler-outline icon-tabler-award">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0" />
-                      <path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889" />
-                      <path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889" />
-                    </svg>
-                  </span>
-                  <div class="lh-sm">
-                    <h3 class="fw-bold mb-0 text-primary" data-cms="stats.years">15+</h3>
-                    <span class="fw-semibold d-block small">Years of Experience</span>
-                    <small class="text-muted">Delivering Wellness Excellence</small>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <div class="d-flex flex-column flex-md-row align-items-center gap-3 text-center text-md-start justify-content-md-start">
-                  <span class="stat-icon flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                      class="icon icon-tabler icons-tabler-outline icon-tabler-beach">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M17.553 16.75a7.5 7.5 0 0 0 -10.606 0" />
-                      <path d="M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z" />
-                      <path d="M16.732 10c1.658 -2.87 2.225 -5.644 1.268 -6.196c-.957 -.552 -3.075 1.326 -4.732 4.196" />
-                      <path d="M15 9l-3 5.196" />
-                      <path d="M3 19.25a2.4 2.4 0 0 1 1 -.25a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 1 -.25" />
-                    </svg>
-                  </span>
-                  <div class="lh-sm">
-                    <h3 class="fw-bold mb-0 fs-5 text-primary">Luxury Maldives</h3>
-                    <span class="fw-semibold d-block small">Wellness Expert</span>
-                    <small class="text-muted">5-Star Resort Experience</small>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <div class="d-flex flex-column flex-md-row align-items-center gap-3 text-center text-md-start justify-content-md-start">
-                  <span class="stat-icon flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                      class="icon icon-tabler icons-tabler-outline icon-tabler-users">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                      <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                      <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                      <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-                    </svg>
-                  </span>
-                  <div class="lh-sm">
-                    <h3 class="fw-bold mb-0 text-primary" data-cms="stats.sessions">5000+</h3>
-                    <span class="fw-semibold d-block small">Guided Wellness Sessions</span>
-                    <small class="text-muted">Transforming Lives Worldwide</small>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-6">
-                <div class="d-flex flex-column flex-md-row align-items-center gap-3 text-center text-md-start justify-content-md-start">
-                  <span class="stat-icon flex-shrink-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none"
-                      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                      class="icon icon-tabler icons-tabler-outline icon-tabler-world">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0" />
-                      <path d="M3.6 9h16.8" /><path d="M3.6 15h16.8" />
-                      <path d="M11.5 3a17 17 0 0 0 0 18" /><path d="M12.5 3a17 17 0 0 1 0 18" />
-                    </svg>
-                  </span>
-                  <div class="lh-sm">
-                    <h3 class="fw-bold mb-0 fs-5 text-primary">Global Online</h3>
-                    <span class="fw-semibold d-block small">Programs</span>
-                    <small class="text-muted">Trusted by Professionals Worldwide</small>
-                  </div>
-                </div>
-              </div>
+      <!-- Full-bleed image (desktop) -->
+      <div class="hero-img-bleed d-none d-lg-block">
+        <img src="/assets/images/hero-img.jpg" alt="Professional practising guided meditation" data-cms-img="hero.image">
+        <div class="hero-quote-card bg-white shadow-lg rounded-4 p-4" style="border-top: 3px solid #C2A35A;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gold mb-2"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"/><path d="M19 11h-4a1 1 0 0 1 -1 -1v-3a1 1 0 0 1 1 -1h3a1 1 0 0 1 1 1v6c0 2.667 -1.333 4.333 -4 5"/></svg>
+          <p class="mb-0 fw-semibold lh-sm" data-cms="hero.quote">Wellness is not a luxury. It's a way of living with clarity, energy and balance.</p>
+        </div>
+      </div>
+
+      <!-- Mobile image -->
+      <div class="container d-lg-none mt-6">
+        <img src="/assets/images/hero-img.jpg" alt="Professional practising guided meditation" class="img-fluid rounded-5 shadow-lg w-100" style="aspect-ratio:4/3.2;object-fit:cover;">
+      </div>
+    </div>
+
+    <!-- Stats band -->
+    <div class="container position-relative pb-lg-11 pb-8" style="z-index:2;">
+      <div class="bg-white rounded-5 shadow-sm border p-lg-6 p-5">
+        <div class="row gx-4 gy-6 text-center text-md-start">
+          <div class="col-lg-3 col-md-6">
+            <div class="d-flex flex-column flex-md-row align-items-center gap-3 justify-content-md-start">
+              <span class="stat-icon flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9m-6 0a6 6 0 1 0 12 0a6 6 0 1 0 -12 0"/><path d="M12 15l3.4 5.89l1.598 -3.233l3.598 .232l-3.4 -5.889"/><path d="M6.802 12l-3.4 5.89l3.598 -.233l1.598 3.232l3.4 -5.889"/></svg></span>
+              <div class="lh-sm"><h3 class="fw-bold mb-0 text-primary" data-cms="stats.years">15+</h3><span class="fw-semibold d-block small">Years of Experience</span><small class="text-muted">Delivering Wellness Excellence</small></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="d-flex flex-column flex-md-row align-items-center gap-3 justify-content-md-start">
+              <span class="stat-icon flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.553 16.75a7.5 7.5 0 0 0 -10.606 0"/><path d="M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z"/><path d="M16.732 10c1.658 -2.87 2.225 -5.644 1.268 -6.196c-.957 -.552 -3.075 1.326 -4.732 4.196"/><path d="M15 9l-3 5.196"/><path d="M3 19.25a2.4 2.4 0 0 1 1 -.25a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 1 -.25"/></svg></span>
+              <div class="lh-sm"><h3 class="fw-bold mb-0 fs-5 text-primary">Luxury Maldives</h3><span class="fw-semibold d-block small">Wellness Expert</span><small class="text-muted">5-Star Resort Experience</small></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="d-flex flex-column flex-md-row align-items-center gap-3 justify-content-md-start">
+              <span class="stat-icon flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg></span>
+              <div class="lh-sm"><h3 class="fw-bold mb-0 text-primary" data-cms="stats.sessions">5000+</h3><span class="fw-semibold d-block small">Guided Wellness Sessions</span><small class="text-muted">Transforming Lives Worldwide</small></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-6">
+            <div class="d-flex flex-column flex-md-row align-items-center gap-3 justify-content-md-start">
+              <span class="stat-icon flex-shrink-0"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg></span>
+              <div class="lh-sm"><h3 class="fw-bold mb-0 fs-5 text-primary">Global Online</h3><span class="fw-semibold d-block small">Programs</span><small class="text-muted">Trusted by Professionals Worldwide</small></div>
             </div>
           </div>
         </div>
