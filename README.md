@@ -21,7 +21,7 @@ offering structured yogic wellness programs for busy, high-responsibility profes
 - FAQ (accordion)
 - Footer
 
-Built on Bootstrap 5 + Vite + SCSS. Imagery sourced from [Pexels](https://www.pexels.com/).
+Built on Next.js 14 + Bootstrap 5 + SCSS. Imagery sourced from [Pexels](https://www.pexels.com/).
 
 ## Getting Started
 

@@ -2,14 +2,11 @@
   "name": "avn-wellness",
   "version": "1.0.0",
   "description": "Ayur Vidya Nikethan (AVN) wellness website + admin",
-  "main": "vite.config.js",
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
     "start": "next start -p 3000",
-    "css": "sass --load-path=node_modules --style=compressed --no-source-map src/assets/scss/style-next.scss app/site.css",
-    "vite:dev": "vite",
-    "vite:build": "vite build"
+    "css": "sass --load-path=node_modules --style=compressed --no-source-map src/assets/scss/style-next.scss app/site.css"
   },
   "keywords": [],
   "author": "",
@@ -32,10 +29,6 @@
     "pg": "^8.12.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "sass": "1.77.6",
-    "vite": "^6.4.1"
-  },
-  "devDependencies": {
-    "fast-glob": "^3.3.3"
+    "sass": "1.77.6"
   }
 }

@@ -39,7 +39,127 @@ body {
 }
 .nav-link.active {
   color: $primary !important;
-  
+
+}
+
+// ============================================================
+// Navbar — desktop reference styling (bold text links, CTA)
+// ============================================================
+
+// Bold, icon-free nav links (match reference)
+.navbar .navbar-nav .nav-link {
+  font-weight: 700;
+  color: $primary !important;
+  letter-spacing: .005em;
+}
+@media (min-width: 992px) {
+  .navbar .navbar-nav { gap: .35rem !important; }
+  .navbar .navbar-nav .nav-link {
+    font-size: 1.02rem;
+    white-space: nowrap;
+    transition: opacity .15s ease;
+    &:hover,
+    &:focus { opacity: .8; }
+  }
+}
+
+// CTA: gold calendar + tight 2-line uppercase label
+.navbar-cta {
+  padding-top: .5rem !important;
+  padding-bottom: .5rem !important;
+
+  .navbar-cta-label {
+    font-size: .78rem;
+    letter-spacing: .04em;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+}
+
+// ============================================================
+// Navbar — on-brand hamburger + premium mobile/tablet menu
+// Desktop (lg+) is untouched; the collapsed panel only renders < lg.
+// ============================================================
+
+// --- Hamburger toggler (only visible below lg) ---
+.navbar-toggler {
+  border: 1.5px solid rgba($gold, .55);
+  border-radius: .7rem;
+  padding: .5rem .62rem;
+  background-color: rgba($cream-200, .55);
+  transition: border-color .2s ease, background-color .2s ease, box-shadow .2s ease;
+
+  &:focus { box-shadow: 0 0 0 .18rem rgba($gold, .25); }
+  &:hover { border-color: $gold; background-color: rgba($gold, .12); }
+  &:not(.collapsed) {                       // open state
+    border-color: $primary;
+    background-color: rgba($primary, .08);
+  }
+
+  .navbar-toggler-icon {
+    width: 1.35em;
+    height: 1.35em;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%231F4A35' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.6' d='M4 8h22M4 15h22M4 22h22'/%3e%3c/svg%3e");
+    transition: transform .2s ease;
+  }
+  &:not(.collapsed) .navbar-toggler-icon {  // morph to an X when open
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%231F4A35' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.6' d='M6 6l18 18M24 6l-18 18'/%3e%3c/svg%3e");
+    transform: rotate(90deg);
+  }
+}
+
+// --- Collapsed dropdown panel: tablet + mobile ---
+@media (max-width: 991.98px) {
+  .navbar .navbar-collapse {
+    margin-top: 1rem;
+    padding: .5rem .9rem 1rem;
+    background: #fff;
+    border: 1px solid rgba($gold, .28);
+    border-top: 3px solid $gold;
+    border-radius: 1rem;
+    box-shadow: 0 20px 44px -20px rgba($primary, .40);
+  }
+
+  .navbar .navbar-nav {
+    margin: 0 !important;
+    gap: .1rem !important;
+  }
+
+  .navbar .navbar-nav .nav-link {
+    padding: .78rem .85rem;
+    border-radius: .65rem;
+    font-weight: 500;
+    color: $primary;
+    transition: background-color .18s ease, color .18s ease, padding-left .18s ease;
+
+    svg { color: $gold; transition: color .18s ease; }
+
+    &:hover,
+    &:focus,
+    &.active {
+      background-color: rgba($primary, .06);
+      color: $primary !important;
+      padding-left: 1.15rem;
+    }
+  }
+
+  // hairline dividers between items (not after the last one)
+  .navbar .navbar-nav .nav-item:not(:last-child) .nav-link {
+    border-bottom: 1px solid rgba($primary, .08);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  // CTA block → full-width, centered
+  .navbar .navbar-collapse > .d-flex {
+    margin: 1rem 0 .15rem !important;
+    width: 100%;
+  }
+  .navbar .navbar-collapse > .d-flex .btn {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
 }
 
 .circle-bg {
@@ -245,7 +365,14 @@ body {
   border-radius: 50%;
   background-color: $primary;
   color: #fff;
-  box-shadow: 0 0 0 4px rgba($gold, 0.35);
+  box-shadow: 0 0 0 2px #fff, 0 0 0 4px rgba($gold, 0.85);
+}
+
+// Gold hairline dividers between hero stat cells (lg+)
+@media (min-width: 992px) {
+  .stat-cell + .stat-cell {
+    border-left: 1px solid rgba($gold, 0.45);
+  }
 }
 
 // Soft botanical backdrop tint

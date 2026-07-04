@@ -179,6 +179,17 @@ export default function SiteScripts() {
           if (target) { e.preventDefault(); window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' }); }
         });
       });
+      // ---- Auto-close the mobile/tablet hamburger menu on any link tap ----
+      const navCollapseEl = document.getElementById('navbarSupportedContent');
+      if (navCollapseEl) {
+        navCollapseEl.querySelectorAll('a').forEach((a) => {
+          a.addEventListener('click', () => {
+            if (navCollapseEl.classList.contains('show')) {
+              bootstrap.Collapse.getOrCreateInstance(navCollapseEl).hide();
+            }
+          });
+        });
+      }
       const sections = document.querySelectorAll('section[id]');
       const navLinks = document.querySelectorAll('.nav-link');
       window.addEventListener('scroll', () => {

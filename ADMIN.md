@@ -71,12 +71,8 @@ The styles still live in `src/assets/scss/`. After changing SCSS, recompile the 
 npm run css      # rebuilds app/site.css from src/assets/scss/style-next.scss
 ```
 
-The page markup lives in `src/index.html` / `src/admin.html`. After editing those, regenerate the
-embedded HTML modules:
-
-```
-node scripts/extract-html.js   # (the extractor used during setup; see below)
-```
+The page markup lives directly in `app/homepageHtml.js` / `app/adminHtml.js` (plain template-string
+modules imported by `app/page.js` / `app/admin/page.js`). Edit those files directly.
 
 ## API summary
 
@@ -92,5 +88,5 @@ node scripts/extract-html.js   # (the extractor used during setup; see below)
 
 ## Notes
 
-- The old Vite static build still works via `npm run vite:dev` / `npm run vite:build`, and the
-  Express server in `server/` is now legacy (unused) — safe to delete if you don't need it.
+- The project is now Next.js-only. The former Vite static build and the legacy Express server
+  (`server/`) have been removed; all serving and API handling is done by the Next `app/` directory.
