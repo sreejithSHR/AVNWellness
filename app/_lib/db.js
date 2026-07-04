@@ -16,13 +16,13 @@ export const DEFAULT_CONTENT = {
     '/assets/images/gallery-4.jpg', '/assets/images/gallery-5.jpg', '/assets/images/gallery-6.jpg',
   ],
   programs: [
-    { accent: 'green', icon: 'yoga', photo: '/assets/images/program-1.jpg', name: 'AVN Professional Stress Reset Program™', tagline: 'Reduce Stress. Restore Balance. Build Lasting Resilience.', duration: '8 Weeks', time: '60 Min', schedule: '5 Days/Wk',
+    { accent: 'green', icon: 'yoga', photo: '/plan1.png', name: 'AVN Professional Stress Reset Program™', tagline: 'Reduce Stress. Restore Balance. Build Lasting Resilience.', duration: '8 Weeks', time: '60 Min', schedule: '5 Days / Week',
       benefits: ['Reduce Stress & Anxiety', 'Calm Overthinking & Mental Overload', 'Restore Emotional Balance', 'Improve Sleep & Energy'], bestFor: 'Bankers, IT Professionals, Executives, Teachers, Doctors & Busy Professionals' },
-    { accent: 'teal', icon: 'spine', photo: '/assets/images/program-2.jpg', name: 'AVN Desk Work Recovery & Posture Wellness Program™', tagline: 'Relieve Pain. Restore Posture. Reclaim Comfortable Movement.', duration: '6 Weeks', time: '60 Min', schedule: '5 Days/Wk',
+    { accent: 'teal', icon: 'spine', photo: '/plan2.png', name: 'AVN Desk Work Recovery & Posture Wellness Program™', tagline: 'Relieve Pain. Restore Posture. Reclaim Comfortable Movement.', duration: '6 Weeks', time: '60 Min', schedule: '5 Days / Week',
       benefits: ['Relieve Neck, Shoulder & Back Pain', 'Improve Posture & Spinal Alignment', 'Reduce Stiffness & Sitting Fatigue', 'Ease Screen Strain & Eye Fatigue'], bestFor: 'IT & Remote Workers, Bank Employees, Teachers, Office & Desk Professionals' },
-    { accent: 'blue', icon: 'moon', photo: '/assets/images/program-3.jpg', name: 'AVN Sleep, Energy & Burnout Recovery Program™', tagline: 'Restore Deep Sleep. Renew Energy. Recover from Burnout.', duration: '8 Weeks', time: '60 Min', schedule: '5 Days/Wk',
+    { accent: 'blue', icon: 'moon', photo: '/plan3.png', name: 'AVN Sleep, Energy & Burnout Recovery Program™', tagline: 'Restore Deep Sleep. Renew Energy. Recover from Burnout.', duration: '8 Weeks', time: '60 Min', schedule: '5 Days / Week',
       benefits: ['Improve Sleep Quality', 'Restore Energy & Vitality', 'Recover From Burnout', 'Calm Nervous System'], bestFor: 'Doctors, Executives, Shift Workers, Entrepreneurs & Busy Professionals' },
-    { accent: 'amber', icon: 'lotus', photo: '/assets/images/program-4.jpg', name: 'AVN Complete Professional Wellness Transformation™', tagline: 'Transforming Stress, Energy, Focus and Wellbeing for Sustainable Professional Success.', duration: '12 Weeks', time: '60 Min', schedule: '5 Days/Wk',
+    { accent: 'amber', icon: 'lotus', photo: '/plan4.png', name: 'AVN Complete Professional Wellness Transformation™', tagline: 'Transforming Stress, Energy, Focus and Wellbeing for Sustainable Professional Success.', duration: '12 Weeks', time: '60 Min', schedule: '5 Days / Week',
       benefits: ['Complete Health & Wellness Reset', 'Better Sleep, Energy & Posture', 'Emotional Balance & Stress Relief', 'Sustainable Lifestyle Transformation'], bestFor: 'Professionals Across All Sectors, Executives, Entrepreneurs & More' },
   ],
   pricing: [
@@ -80,6 +80,11 @@ export function ensureInit() {
       if (!r.length) await sql`INSERT INTO site_content (id, data) VALUES (1, ${JSON.stringify(DEFAULT_CONTENT)}::jsonb)`;
       // drop legacy nested keys from the earlier form-based model
       await sql`UPDATE site_content SET data = (data - 'hero' - 'stats' - 'contact') WHERE id = 1`;
+      // one-time: drop stale seeded programs (old /assets/images/program-*.jpg photos) so the
+      // corrected defaults (plan1-4.png + updated schedule) take effect. Guarded so it runs once
+      // and never wipes genuine admin edits (which won't reference the old photo paths).
+      await sql`UPDATE site_content SET data = (data - 'programs')
+        WHERE id = 1 AND data->'programs'->0->>'photo' LIKE '/assets/images/program-%'`;
     })().catch((e) => { initPromise = undefined; throw e; });
   }
   return initPromise;

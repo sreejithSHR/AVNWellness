@@ -52,11 +52,13 @@ body {
   color: $primary !important;
   letter-spacing: .005em;
 }
-@media (min-width: 992px) {
-  .navbar .navbar-nav { gap: .35rem !important; }
+@media (min-width: 1200px) {
+  .navbar .navbar-nav { gap: .15rem !important; }
   .navbar .navbar-nav .nav-link {
-    font-size: 1.02rem;
+    font-size: .95rem;
     white-space: nowrap;
+    padding-left: .6rem;
+    padding-right: .6rem;
     transition: opacity .15s ease;
     &:hover,
     &:focus { opacity: .8; }
@@ -65,12 +67,13 @@ body {
 
 // CTA: gold calendar + tight 2-line uppercase label
 .navbar-cta {
-  padding-top: .5rem !important;
-  padding-bottom: .5rem !important;
+  padding-top: .45rem !important;
+  padding-bottom: .45rem !important;
+  gap: .6rem !important;
 
   .navbar-cta-label {
-    font-size: .78rem;
-    letter-spacing: .04em;
+    font-size: .74rem;
+    letter-spacing: .03em;
     line-height: 1.2;
     white-space: nowrap;
   }
@@ -91,7 +94,7 @@ body {
 
   &:focus { box-shadow: 0 0 0 .18rem rgba($gold, .25); }
   &:hover { border-color: $gold; background-color: rgba($gold, .12); }
-  &:not(.collapsed) {                       // open state
+  &[aria-expanded="true"] {                 // open state
     border-color: $primary;
     background-color: rgba($primary, .08);
   }
@@ -102,14 +105,14 @@ body {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%231F4A35' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.6' d='M4 8h22M4 15h22M4 22h22'/%3e%3c/svg%3e");
     transition: transform .2s ease;
   }
-  &:not(.collapsed) .navbar-toggler-icon {  // morph to an X when open
+  &[aria-expanded="true"] .navbar-toggler-icon {  // morph to an X when open
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%231F4A35' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2.6' d='M6 6l18 18M24 6l-18 18'/%3e%3c/svg%3e");
     transform: rotate(90deg);
   }
 }
 
 // --- Collapsed dropdown panel: tablet + mobile ---
-@media (max-width: 991.98px) {
+@media (max-width: 1199.98px) {
   .navbar .navbar-collapse {
     margin-top: 1rem;
     padding: .5rem .9rem 1rem;

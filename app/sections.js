@@ -3,9 +3,9 @@
 
 export const ACCENTS = { green: '#1F4A35', teal: '#0E8A8A', blue: '#21489B', amber: '#B07D1A' };
 export const ICONS = {
-  yoga: '<path d="M12 4m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M4 17l5 1l.75 -1.5"/><path d="M15 21l-2 -7.5"/><path d="M5 12l5 -1.5l5 -1.5l5 1.5"/>',
+  yoga: '<circle cx="12" cy="5" r="2"/><path d="M12 7v4.5"/><path d="M5 18c1 -3.6 3.5 -5.5 7 -5.5s6 1.9 7 5.5"/><path d="M5 18h14"/><path d="M8.5 11.8c-2 .8 -3.3 2 -4 3.7"/><path d="M15.5 11.8c2 .8 3.3 2 4 3.7"/>',
   spine: '<path d="M12 3v18"/><path d="M9 6l3 -1l3 1"/><path d="M9 10l3 -1l3 1"/><path d="M9 14l3 -1l3 1"/><path d="M9 18l3 -1l3 1"/>',
-  moon: '<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/>',
+  moon: '<path d="M18 4a7.5 7.5 0 0 0 -6 11.95a7.5 7.5 0 1 1 6 -11.95z"/><path d="M16.5 6.5l.4 1.1l1.1 .4l-1.1 .4l-.4 1.1l-.4 -1.1l-1.1 -.4l1.1 -.4z"/>',
   lotus: '<path d="M12 21c3.5 0 6 -2.5 6 -6c0 -2 -1 -4 -3 -5.5c0 4 -3 5.5 -3 5.5s-3 -1.5 -3 -5.5c-2 1.5 -3 3.5 -3 5.5c0 3.5 2.5 6 6 6z"/><path d="M3 15c2 1 3.5 2.5 4 4"/><path d="M21 15c-2 1 -3.5 2.5 -4 4"/>',
   heart: '<path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"/>',
   sparkles: '<path d="M16 18a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm0 -12a2 2 0 0 1 2 2a2 2 0 0 1 2 -2a2 2 0 0 1 -2 -2a2 2 0 0 1 -2 2zm-7 12a6 6 0 0 1 6 -6a6 6 0 0 1 -6 -6a6 6 0 0 1 -6 6a6 6 0 0 1 6 6z"/>',
@@ -25,7 +25,8 @@ const QUOTE = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" strok
 export function renderPrograms(list) {
   return (list || []).map((c) => {
     const a = acc(c.accent);
-    const benefits = (c.benefits || []).map((b) => `<li class="d-flex gap-2"><span style="color:${a};">${CHECK}</span><span>${E(b)}</span></li>`).join('');
+    const cc = `<svg width="18" height="18" viewBox="0 0 24 24" class="flex-shrink-0"><circle cx="12" cy="12" r="10" fill="${a}"/><path d="M8 12.4l2.6 2.6l5 -5.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const benefits = (c.benefits || []).map((b) => `<li class="d-flex gap-2 align-items-center">${cc}<span style="color:#1f1f1f;">${E(b)}</span></li>`).join('');
     return `<div class="col-lg-3 col-md-6">
       <div class="card h-100 rounded-5 shadow-sm card-lift program-card position-relative overflow-hidden" style="border-top:4px solid ${a};">
         ${c.photo ? `<img src="${E(c.photo)}" alt="${E(c.name)}" class="program-photo" style="position:absolute;top:0;right:0;width:46%;height:170px;object-fit:cover;object-position:top center;-webkit-mask-image:linear-gradient(to left,#000 30%,transparent 85%);mask-image:linear-gradient(to left,#000 30%,transparent 85%);">` : ''}
