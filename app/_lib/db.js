@@ -49,6 +49,7 @@ export const DEFAULT_CONTENT = {
     { q: 'What if I cannot attend the live session?', a: 'Every session is made available through secure password-protected participant access, allowing you to practice within the next 23–24 hours after the live session — flexible for global time zones and demanding schedules.' },
     { q: 'How much time do I need daily?', a: 'Each program requires only 45 minutes per day, carefully structured to fit into the schedules of busy professionals while still creating meaningful and sustainable wellness results.' },
     { q: 'How do I know which program is right for me?', a: "If you are unsure which program best fits your needs, you may book a complimentary wellness consultation. We'll help you identify the most suitable program based on your lifestyle, stress levels, health concerns and wellness goals." },
+    { q: 'Are these programs designed specifically for working professionals?', a: 'Yes. AVN programs are specially designed for high-responsibility professionals, including executives, doctors, IT professionals, educators, entrepreneurs, banking professionals, lawyers, and government personnel managing demanding lifestyles.' },
     { q: 'Do I need flexibility or prior fitness experience to join?', a: 'Not at all. AVN programs focus on safe, sustainable and realistic practices rather than advanced postures or intense physical performance — the emphasis is on wellbeing, stress reduction, posture improvement, emotional balance and long-term health.' },
     { q: 'Will I receive personal guidance and support?', a: 'Yes. Participants receive guided instruction, structured support and wellness resources throughout the program. Selected programs also offer premium 1:1 guidance options for a more personalised wellness journey.' },
   ],
@@ -85,6 +86,11 @@ export function ensureInit() {
       // and never wipes genuine admin edits (which won't reference the old photo paths).
       await sql`UPDATE site_content SET data = (data - 'programs')
         WHERE id = 1 AND data->'programs'->0->>'photo' LIKE '/assets/images/program-%'`;
+      // one-time: drop the stale 7-item faq so the corrected 8-item default (adds the
+      // "designed specifically for working professionals?" question) takes effect. Guarded
+      // so it runs once and never wipes a genuine admin edit that already has 8+ items.
+      await sql`UPDATE site_content SET data = (data - 'faq')
+        WHERE id = 1 AND jsonb_array_length(data->'faq') = 7`;
     })().catch((e) => { initPromise = undefined; throw e; });
   }
   return initPromise;

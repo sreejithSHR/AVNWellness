@@ -16,6 +16,10 @@ export const ACCENT_NAMES = Object.keys(ACCENTS);
 const E = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const acc = (a) => ACCENTS[a] || ACCENTS.green;
 const ic = (name, w) => `<svg xmlns="http://www.w3.org/2000/svg" width="${w || 26}" height="${w || 26}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ICONS.lotus}</svg>`;
+// Use the supplied artwork files for the lotus & spine program icons; other icons stay inline line-art.
+const iconImg = (name, w) => (name === 'lotus' || name === 'spine')
+  ? `<img src="/${name}.svg" alt="" style="width:${w || 32}px;height:${w || 32}px;object-fit:contain;">`
+  : ic(name, w);
 const CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1"><path d="M5 12l5 5l10 -10"/></svg>';
 const CAL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></svg>';
 const CLK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>';
@@ -28,7 +32,7 @@ export function renderPrograms(list) {
     const cc = `<svg width="18" height="18" viewBox="0 0 24 24" class="flex-shrink-0"><circle cx="12" cy="12" r="10" fill="${a}"/><path d="M8 12.4l2.6 2.6l5 -5.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
     const benefits = (c.benefits || []).map((b) => `<li class="d-flex gap-2 align-items-center">${cc}<span style="color:#1f1f1f;">${E(b)}</span></li>`).join('');
     const nm = E(c.name).replace(/(\S+™)/, '<span style="white-space:nowrap;">$1</span>');
-    const iconHtml = c.icon === 'lotus' ? '<img src="/lotus-white.svg" alt="" style="width:34px;height:34px;">' : ic(c.icon);
+    const iconHtml = iconImg(c.icon, 34);
     return `<div class="col-lg-3 col-md-6">
       <div class="card h-100 rounded-5 shadow-sm card-lift program-card position-relative overflow-hidden">
         <span style="position:absolute;top:0;left:0;right:0;height:3px;background:${a};z-index:5;"></span>
@@ -61,20 +65,23 @@ export function renderPricing(list) {
     const a = acc(c.accent);
     const border = c.badge ? `border:2px solid ${a};` : '';
     const topbadge = c.badge ? `<span class="badge rounded-pill text-white position-absolute top-0 start-50 translate-middle-x mt-n3 px-3 py-2 fw-semibold" style="background:${a};z-index:2;white-space:nowrap;">&starf; ${E(c.badge)}</span>` : '';
-    const feats = (c.features || []).map((f) => `<li class="d-flex gap-2"><span style="color:${a};">${CHECK.replace('16','15')}</span><span>${E(f)}</span></li>`).join('');
+    const cc = `<svg width="16" height="16" viewBox="0 0 24 24" class="flex-shrink-0 mt-1"><circle cx="12" cy="12" r="10" fill="${a}"/><path d="M8 12.4l2.6 2.6l5 -5.6" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const feats = (c.features || []).map((f) => `<li class="d-flex gap-2 align-items-start">${cc}<span>${E(f)}</span></li>`).join('');
     return `<div class="col-lg-3 col-md-6">
-      <div class="card h-100 rounded-5 shadow-sm card-lift position-relative" style="${border}">
+      <div class="card h-100 rounded-4 shadow-sm card-lift position-relative" style="${border || 'border:1px solid #ece6d8 !important;'}">
         ${topbadge}
-        <div class="card-body p-5 d-flex flex-column">
-          <span class="icon-shape icon-lg rounded-circle text-white mb-3" style="background:${a};box-shadow:0 0 0 4px ${a}33;">${ic(c.icon)}</span>
-          <h3 class="h6 fw-bold mb-2" style="min-height:3rem;">${E(c.name)}</h3>
-          <p class="text-muted mb-4" style="font-size:12px;">${E(c.tagline)}</p>
+        <div class="card-body p-4 d-flex flex-column">
+          <div class="d-flex align-items-center gap-3 mb-2">
+            <span class="icon-shape icon-lg rounded-circle text-white flex-shrink-0" style="background:${a};box-shadow:0 0 0 4px ${a}22;">${iconImg(c.icon, 30)}</span>
+            <h3 class="fw-bold mb-0" style="font-size:1.02rem;color:#1c1c1c;line-height:1.25;">${E(c.name)}</h3>
+          </div>
+          <p class="text-muted mb-3" style="font-size:12.5px;line-height:1.5;">${E(c.tagline)}</p>
           <div class="rounded-3 text-center fw-bold text-uppercase py-2 mb-3" style="background:${a}14;color:${a};font-size:11px;letter-spacing:.04rem;">Founding Member Launch Offer</div>
           <div class="text-center mb-3">
             <span class="fw-bold" style="font-size:2.4rem;color:${a};line-height:1;">&#8377;${E(c.price)}</span>
             <div class="small text-muted mt-1">Regular Price <s>&#8377;${E(c.regular)}</s></div>
             <div class="d-flex justify-content-center gap-2 mt-2">
-              <span class="badge rounded-pill" style="background:${a}22;color:${a};">SAVE ${E(c.save)}%</span>
+              <span class="badge rounded-pill" style="background:#EFE1AE;color:#7a5f14;">SAVE ${E(c.save)}%</span>
               <span class="badge rounded-pill bg-danger bg-opacity-10 text-danger">&#9201; ENDS SOON</span>
             </div>
           </div>
@@ -89,16 +96,30 @@ export function renderPricing(list) {
   }).join('');
 }
 
+const FAQ_ICONS = [
+  '<path d="M12 4c1.8 2.2 2.8 4.4 2.8 6.6a2.8 2.8 0 1 1 -5.6 0c0 -2.2 1 -4.4 2.8 -6.6z"/><path d="M7 7.5c.3 2.6 1.2 4.7 2.7 6.3"/><path d="M17 7.5c-.3 2.6 -1.2 4.7 -2.7 6.3"/><path d="M3.5 11c1 3.8 3.4 6.3 6.5 7.2"/><path d="M20.5 11c-1 3.8 -3.4 6.3 -6.5 7.2"/>',
+  '<path d="M3 4a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10z"/><path d="M7 20h10"/><path d="M9 16v4"/><path d="M15 16v4"/><path d="M10 8l3 2l-3 2z"/>',
+  '<path d="M19 18a3.5 3.5 0 0 0 0 -7h-1a5 4.5 0 0 0 -11 -1.5a4.6 4.4 0 0 0 -2 8.4"/><path d="M12 13v9"/><path d="M9 19l3 3l3 -3"/>',
+  '<circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/>',
+  '<path d="M8 16l2 -6l6 -2l-2 6l-6 2"/><path d="M12 21a9 9 0 1 0 0 -18a9 9 0 0 0 0 18z"/>',
+  '<path d="M3 7m0 2a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M8 7v-2a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v2"/><path d="M12 12l0 .01"/><path d="M3 13a20 20 0 0 0 18 0"/>',
+  '<circle cx="12" cy="4.8" r="1.9"/><path d="M12 6.7v5.3"/><path d="M12 12l-4.5 5h9z"/><path d="M12 9c-2.4 -.6 -4.2 -2.6 -5 -5"/><path d="M12 9c2.4 -.6 4.2 -2.6 5 -5"/>',
+  '<path d="M4 14v-3a8 8 0 0 1 16 0v3"/><path d="M18 19a2 2 0 0 1 -2 2h-1.5"/><path d="M4 13m0 2a2 2 0 0 1 2 -2h1a1 1 0 0 1 1 1v3a1 1 0 0 1 -1 1h-1a2 2 0 0 1 -2 -2z"/><path d="M15 13m0 2a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v3a2 2 0 0 1 -2 2h-1a1 1 0 0 1 -1 -1z"/>',
+];
 export function renderFaq(list) {
-  return (list || []).map((f, i) => `
-    <div class="accordion-item border rounded-4 mb-3 overflow-hidden">
-      <h2 class="accordion-header">
-        <button class="accordion-button collapsed fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#faqItem${i}">${E(f.q)}</button>
-      </h2>
-      <div id="faqItem${i}" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
-        <div class="accordion-body small text-muted">${E(f.a)}</div>
-      </div>
-    </div>`).join('');
+  const CHEV = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6l6 -6"/></svg>';
+  return (list || []).map((f, i) => {
+    const icon = FAQ_ICONS[i % FAQ_ICONS.length];
+    return `<div class="faq-item">
+      <button class="faq-q" type="button" data-bs-toggle="collapse" data-bs-target="#faqItem${i}" aria-expanded="false" aria-controls="faqItem${i}">
+        <span class="faq-num">${i + 1}</span>
+        <span class="faq-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${icon}</svg></span>
+        <span class="faq-qt">${E(f.q)}</span>
+        <span class="faq-chev">${CHEV}</span>
+      </button>
+      <div id="faqItem${i}" class="collapse"><div class="faq-a">${E(f.a)}</div></div>
+    </div>`;
+  }).join('');
 }
 
 const T_GRAD = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 9l-10 -4l-10 4l10 4l10 -4v6"/><path d="M6 10.6v5.4a6 3 0 0 0 12 0v-5.4"/></svg>';
