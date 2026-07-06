@@ -118,7 +118,9 @@ export const homepageHtml = `
   #founders .fd-highlight h6{color:#1c1c1c;font-weight:700;font-size:.88rem;margin-bottom:.5rem;}
   #founders .fd-highlight ul{padding-left:1rem;margin:0;display:flex;flex-direction:column;gap:.32rem;}
   #founders .fd-highlight li{font-size:.81rem;color:#4a4a4a;line-height:1.35;}
-  #founders .fd-lotus{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:86px;height:86px;border-radius:50%;background:#FFFDF9;border:1px solid #e6dcc4;box-shadow:0 8px 22px -12px rgba(31,74,53,.3);align-items:center;justify-content:center;z-index:3;}
+  #founders .fd-divider{position:absolute;top:10px;bottom:10px;left:50%;transform:translateX(-50%);width:1px;padding:0;margin:0;background:#e2d9c2;z-index:1;}
+  #founders .fd-lotus{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:60px;height:60px;padding:0;margin:0;border-radius:50%;background:#FFFDF9;border:1px solid #e2d9c2;box-shadow:0 6px 18px -10px rgba(31,74,53,.3);align-items:center;justify-content:center;z-index:3;}
+  @media(min-width:992px){#founders .fd-col-l{padding-right:52px;}#founders .fd-col-r{padding-left:52px;}}
   #founders .fd-quote{background:#F7F3EA;border:1px solid #ece6d8;border-radius:1.2rem;padding:1.6rem 1.9rem;position:relative;overflow:hidden;}
   #founders .fd-qmark{font-family:Georgia,'Times New Roman',serif;font-size:3.4rem;line-height:.7;color:#C9B26A;flex-shrink:0;}
   #founders .fd-quote p{color:#3a3a3a;font-size:1rem;line-height:1.6;}
@@ -259,10 +261,16 @@ export const homepageHtml = `
   .ftr-join-t{font-weight:700;color:#1c1c1c;font-size:1.02rem;line-height:1.2;}
   .ftr-flags{display:flex;flex-wrap:wrap;gap:.45rem;}
   .ftr-flag{width:30px;height:30px;border-radius:50%;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;font-size:1.15rem;line-height:1;background:#f1efe8;box-shadow:0 0 0 1px #e6dcc4;}
+  .ftr-flag img{width:20px;height:20px;border-radius:50%;object-fit:cover;display:block;}
   .ftr-bottom{background:#1F4A35;color:rgba(255,255,255,.82);}
   .ftr-bottom a{color:#fff;text-decoration:none;}
   .ftr-social{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);display:inline-flex;align-items:center;justify-content:center;color:#fff;transition:background .2s;}
   .ftr-social:hover{background:rgba(255,255,255,.22);}
+  /* Asset icons (lotus / spine / meditation) rendered as masks so they take the surrounding text colour */
+  .ic-lotus,.ic-spine,.ic-meditation{display:inline-block;background-color:currentColor;vertical-align:middle;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain;}
+  .ic-lotus{-webkit-mask-image:url('/lotus.svg');mask-image:url('/lotus.svg');}
+  .ic-spine{-webkit-mask-image:url('/spine.svg');mask-image:url('/spine.svg');}
+  .ic-meditation{-webkit-mask-image:url('/meditation.svg');mask-image:url('/meditation.svg');}
   @media(max-width:575.98px){.fb-colb{border-right:0;border-bottom:1px solid #eceae2;padding-bottom:.6rem;margin-bottom:.6rem;}}
   /* Watch Free Session section */
   #watch-session{color:#1c1c1c;}
@@ -876,7 +884,7 @@ export const homepageHtml = `
         <div class="col-lg-7">
           <div class="row gy-4">
             <div class="col-6 col-md-3 about-pillar text-center">
-              <span class="text-primary d-inline-flex mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4c1.8 2.2 2.8 4.4 2.8 6.6a2.8 2.8 0 1 1 -5.6 0c0 -2.2 1 -4.4 2.8 -6.6z"/><path d="M7 7.5c.3 2.6 1.2 4.7 2.7 6.3"/><path d="M17 7.5c-.3 2.6 -1.2 4.7 -2.7 6.3"/><path d="M3.5 11c1 3.8 3.4 6.3 6.5 7.2"/><path d="M20.5 11c-1 3.8 -3.4 6.3 -6.5 7.2"/><path d="M4 18.5c2.4 1 5.1 1.5 8 1.5s5.6 -.5 8 -1.5"/></svg></span>
+              <span class="text-primary d-inline-flex mb-2"><span class="ic-lotus" style="width:44px;height:44px;"></span></span>
               <h3 class="h6 fw-bold mb-1">Ancient Wisdom</h3>
               <p class="small mb-0">Rooted in Yoga Philosophy</p>
             </div>
@@ -1048,7 +1056,7 @@ export const homepageHtml = `
         <div class="col-lg-3 col-md-6">
           <div class="st-card h-100 p-4 d-flex flex-column">
             <div class="d-flex align-items-center gap-3 mb-3">
-              <span class="why-ico" style="background:#0E8A8A;"><span class="why-num">03</span><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c3.5 0 6 -2.5 6 -6c0 -2 -1 -4 -3 -5.5c0 4 -3 5.5 -3 5.5s-3 -1.5 -3 -5.5c-2 1.5 -3 3.5 -3 5.5c0 3.5 2.5 6 6 6z"/><path d="M3 15c2 1 3.5 2.5 4 4"/><path d="M21 15c-2 1 -3.5 2.5 -4 4"/></svg></span>
+              <span class="why-ico" style="background:#0E8A8A;"><span class="why-num">03</span><span class="ic-meditation" style="width:28px;height:28px;"></span></span>
               <h3 class="why-t mb-0">Why Is Ordinary Yoga Not Enough?</h3>
             </div>
             <p class="why-d">Generic yoga classes are not designed for real-life stress, modern lifestyle, or professional challenges.</p>
@@ -1083,7 +1091,7 @@ export const homepageHtml = `
                 <p class="st-info-d mb-0">To become a global leader in holistic wellness education, creating a healthier, calmer and more conscious world one professional at a time.</p>
               </div>
               <div class="col-6 col-lg-3">
-                <span class="mb-2 d-inline-block" style="color:#1F4A35;"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c3.5 0 6 -2.5 6 -6c0 -2 -1 -4 -3 -5.5c0 4 -3 5.5 -3 5.5s-3 -1.5 -3 -5.5c-2 1.5 -3 3.5 -3 5.5c0 3.5 2.5 6 6 6z"/><path d="M3 15c2 1 3.5 2.5 4 4"/><path d="M21 15c-2 1 -3.5 2.5 -4 4"/></svg></span>
+                <span class="mb-2 d-inline-block" style="color:#1F4A35;"><span class="ic-meditation" style="width:30px;height:30px;"></span></span>
                 <h4 class="st-info-t mb-1">Our Approach</h4>
                 <p class="st-info-d mb-0">An integrated blend of Yoga, Meditation, Wellness Education, Counselling, Applied Psychology, Nutrition &amp; Lifestyle Guidance.</p>
               </div>
@@ -1117,7 +1125,7 @@ export const homepageHtml = `
             <div class="col"><span class="text-primary d-inline-block mb-1"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"/></svg></span><div class="small fw-semibold">Clarity</div></div>
             <div class="col"><span class="text-primary d-inline-block mb-1"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/></svg></span><div class="small fw-semibold">Resilience</div></div>
             <div class="col"><span class="text-primary d-inline-block mb-1"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6 -6l4 4l8 -8"/><path d="M14 7l7 0l0 7"/></svg></span><div class="small fw-semibold">Performance</div></div>
-            <div class="col"><span class="text-primary d-inline-block mb-1"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4c1.8 2.2 2.8 4.4 2.8 6.6a2.8 2.8 0 1 1 -5.6 0c0 -2.2 1 -4.4 2.8 -6.6z"/><path d="M7 7.5c.3 2.6 1.2 4.7 2.7 6.3"/><path d="M17 7.5c-.3 2.6 -1.2 4.7 -2.7 6.3"/><path d="M3.5 11c1 3.8 3.4 6.3 6.5 7.2"/><path d="M20.5 11c-1 3.8 -3.4 6.3 -6.5 7.2"/><path d="M4 18.5c2.4 1 5.1 1.5 8 1.5s5.6 -.5 8 -1.5"/></svg></span><div class="small fw-semibold">Balance</div></div>
+            <div class="col"><span class="text-primary d-inline-block mb-1"><span class="ic-lotus" style="width:26px;height:26px;"></span></span><div class="small fw-semibold">Balance</div></div>
             <div class="col"><span class="text-primary d-inline-block mb-1"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/><path d="M9 10l.01 0"/><path d="M15 10l.01 0"/><path d="M9.5 15a3.5 3.5 0 0 0 5 0"/></svg></span><div class="small fw-semibold">Wellbeing</div></div>
           </div>
         </div>
@@ -1217,7 +1225,7 @@ export const homepageHtml = `
             <div class="px-2"><span class="text-gold d-inline-flex mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.5" r="2"/><path d="M12 7v6"/><path d="M9 21l3 -8l3 8"/><path d="M6 10l6 2l6 -2"/></svg></span><div class="small fw-semibold lh-sm">Relieve Body Tension</div></div>
           </div>
           <div class="col-6 col-lg wf-help-cell">
-            <div class="px-2"><span class="text-gold d-inline-flex mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 8c1.5 1.8 2.3 3.6 2.3 5.4a2.3 2.3 0 1 1 -4.6 0c0 -1.8 .8 -3.6 2.3 -5.4z"/><path d="M6.5 11c.3 2.4 1.3 4.2 3 5.6"/><path d="M17.5 11c-.3 2.4 -1.3 4.2 -3 5.6"/><path d="M4 15c2 1.5 5 2.4 8 2.4s6 -.9 8 -2.4"/></svg></span><div class="small fw-semibold lh-sm">Experience Deep Relaxation</div></div>
+            <div class="px-2"><span class="text-gold d-inline-flex mb-2"><span class="ic-lotus" style="width:30px;height:30px;"></span></span><div class="small fw-semibold lh-sm">Experience Deep Relaxation</div></div>
           </div>
           <div class="col-6 col-lg wf-help-cell">
             <div class="px-2"><span class="text-gold d-inline-flex mb-2"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M17 4l.5 1.5l1.5 .5l-1.5 .5l-.5 1.5l-.5 -1.5l-1.5 -.5l1.5 -.5z"/><path d="M20 8l.4 1l1 .4l-1 .4l-.4 1l-.4 -1l-1 -.4l1 -.4z"/></svg></span><div class="small fw-semibold lh-sm">Take The First Step Towards A Better You</div></div>
@@ -1433,7 +1441,7 @@ export const homepageHtml = `
       <!-- 4 value props -->
       <div class="row gy-3 mb-3 text-center">
         <div class="col-6 col-lg-3 serve-prop">
-          <span class="serve-prop-ico d-inline-flex align-items-center justify-content-center text-primary mb-2"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21c3.5 0 6 -2.5 6 -6c0 -2 -1 -4 -3 -5.5c0 4 -3 5.5 -3 5.5s-3 -1.5 -3 -5.5c-2 1.5 -3 3.5 -3 5.5c0 3.5 2.5 6 6 6z"/><path d="M3 15c2 1 3.5 2.5 4 4"/><path d="M21 15c-2 1 -3.5 2.5 -4 4"/></svg></span>
+          <span class="serve-prop-ico d-inline-flex align-items-center justify-content-center text-primary mb-2"><span class="ic-meditation" style="width:30px;height:30px;"></span></span>
           <h4 class="h6 fw-bold mb-1">Science Backed</h4>
           <p class="text-muted mb-0" style="font-size:.86rem;">Evidence-based yogic wellness programs</p>
         </div>
@@ -1555,7 +1563,7 @@ export const homepageHtml = `
             <span class="text-gold flex-shrink-0"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg></span>
             <div class="lh-sm"><div class="h4 fw-bold text-gold mb-0">25+</div><small class="text-white text-opacity-75">Countries Reached</small></div></div></div>
           <div class="col-6 col-lg serve-stat"><div class="d-flex flex-column flex-lg-row align-items-center gap-2 gap-lg-3">
-            <span class="text-gold flex-shrink-0"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4c1.8 2.2 2.8 4.4 2.8 6.6a2.8 2.8 0 1 1 -5.6 0c0 -2.2 1 -4.4 2.8 -6.6z"/><path d="M7 7.5c.3 2.6 1.2 4.7 2.7 6.3"/><path d="M17 7.5c-.3 2.6 -1.2 4.7 -2.7 6.3"/><path d="M3.5 11c1 3.8 3.4 6.3 6.5 7.2"/><path d="M20.5 11c-1 3.8 -3.4 6.3 -6.5 7.2"/><path d="M4 18.5c2.4 1 5.1 1.5 8 1.5s5.6 -.5 8 -1.5"/></svg></span>
+            <span class="text-gold flex-shrink-0"><span class="ic-lotus" style="width:34px;height:34px;"></span></span>
             <div class="lh-sm"><div class="h4 fw-bold text-gold mb-0">4</div><small class="text-white text-opacity-75">Signature Wellness Programs</small></div></div></div>
           <div class="col-12 col-lg-auto text-center"><a href="#consultation" class="btn text-primary fw-semibold rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2" style="background:#C2A35A;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></svg>Book Your Free Consultation<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/><path d="M13 18l6 -6"/><path d="M13 6l6 6"/></svg></a><div class="small text-white text-opacity-75 mt-2">No obligation. 100% confidential.</div></div>
         </div>
@@ -1607,7 +1615,7 @@ export const homepageHtml = `
       <div class="row g-3 g-lg-4 mb-4">
         <div class="col-12 col-md-6 col-xl-3">
           <div class="lp-card text-center">
-            <div class="lp-ico" style="background:#1F4A35;"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="4.8" r="1.9"/><path d="M12 6.7v5.3"/><path d="M12 12l-4.5 5h9z"/><path d="M12 9c-2.4 -.6 -4.2 -2.6 -5 -5"/><path d="M12 9c2.4 -.6 4.2 -2.6 5 -5"/></svg></div>
+            <div class="lp-ico" style="background:#1F4A35;"><span class="ic-meditation" style="width:40px;height:40px;"></span></div>
             <div class="lp-name">Stress Reset<span style="white-space:nowrap;">&trade;</span></div>
             <div class="lp-tag">Calm the Mind.</div>
             <div class="lp-div"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c.5 -4.5 2.5 -8 7 -10"/><path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/></svg></div>
@@ -1621,7 +1629,7 @@ export const homepageHtml = `
         </div>
         <div class="col-12 col-md-6 col-xl-3">
           <div class="lp-card text-center">
-            <div class="lp-ico" style="background:#0E8A8A;"><img src="/spine.svg" alt="" style="width:40px;height:40px;object-fit:contain;"></div>
+            <div class="lp-ico" style="background:#0E8A8A;"><span class="ic-spine" style="width:42px;height:42px;"></span></div>
             <div class="lp-name">Desk Work Recovery<span style="white-space:nowrap;">&trade;</span></div>
             <div class="lp-tag">Correct Posture.</div>
             <div class="lp-div"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c.5 -4.5 2.5 -8 7 -10"/><path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/></svg></div>
@@ -1650,7 +1658,7 @@ export const homepageHtml = `
         <div class="col-12 col-md-6 col-xl-3">
           <div class="lp-card text-center" style="border:1.5px solid #E4C77E;">
             <span class="lp-premium">PREMIUM PROGRAM</span>
-            <div class="lp-ico" style="background:#B07D1A;"><img src="/lotus.svg" alt="" style="width:40px;height:40px;object-fit:contain;"></div>
+            <div class="lp-ico" style="background:#B07D1A;"><span class="ic-lotus" style="width:42px;height:42px;"></span></div>
             <div class="lp-name">Complete Transformation<span style="white-space:nowrap;">&trade;</span></div>
             <div class="lp-tag">Transform Your Life.</div>
             <div class="lp-div"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c.5 -4.5 2.5 -8 7 -10"/><path d="M9 18c6.218 0 10.5 -3.288 11 -12v-2h-4.014c-9 0 -11.986 4 -12 9c0 1 0 3 2 5h3z"/></svg></div>
@@ -1778,9 +1786,10 @@ export const homepageHtml = `
       </div>
 
       <!-- Qualifications panels -->
-      <div class="row g-4 mb-4 position-relative">
+      <div class="position-relative mb-4">
+        <div class="row g-4">
         <!-- Lijoy qualifications -->
-        <div class="col-lg-6">
+        <div class="col-lg-6 fd-col-l">
           <div class="fd-qual">
             <span class="fd-qual-head">Lijoy Raj C.R. &ndash; Qualifications &amp; Expertise</span>
             <div class="row g-4">
@@ -1822,7 +1831,7 @@ export const homepageHtml = `
           </div>
         </div>
         <!-- Leema qualifications -->
-        <div class="col-lg-6">
+        <div class="col-lg-6 fd-col-r">
           <div class="fd-qual">
             <span class="fd-qual-head">Leema Prasad &ndash; Qualifications &amp; Expertise</span>
             <div class="row g-4">
@@ -1859,8 +1868,10 @@ export const homepageHtml = `
             </div>
           </div>
         </div>
-        <!-- Center lotus emblem -->
-        <div class="fd-lotus d-none d-lg-flex"><img src="/lotus.svg" alt="" aria-hidden="true" style="width:46px;height:46px;"></div>
+        </div>
+        <!-- Center lotus emblem on divider line -->
+        <div class="fd-divider d-none d-lg-block"></div>
+        <div class="fd-lotus d-none d-lg-flex"><img src="/lotus.svg" alt="" aria-hidden="true" style="width:32px;height:32px;"></div>
       </div>
 
       <!-- Founders quote band -->
@@ -2114,31 +2125,17 @@ export const homepageHtml = `
   <!-- Pricing Start -->
   <section class="py-lg-9 py-7 position-relative overflow-hidden" id="pricing">
     <div class="container position-relative">
-      <!-- Header: image + heading/stats + why card -->
-      <div class="row g-4 align-items-stretch mb-5">
-        <div class="col-lg-3 col-md-4 d-none d-md-block">
-          <img src="/about.png" alt="AVN wellness" class="fb-hero-img" style="height:100%;min-height:200px;">
-        </div>
-        <div class="col-lg-5 col-md-8 text-center d-flex flex-column justify-content-center">
+      <!-- Header -->
+      <div class="row">
+        <div class="col-lg-9 mx-auto text-center mb-5">
           <span class="text-uppercase fw-bold d-block mb-2" style="letter-spacing:.14rem;font-size:.82rem;color:#1F4A35;">Invest in Your Wellbeing</span>
-          <h2 class="fw-bold mb-2" style="font-size:clamp(1.6rem,2.7vw,2.4rem);line-height:1.14;"><span style="color:#1c1c1c;">Simple, Transparent Pricing.</span><br><span style="color:#1F4A35;">Life-Changing Results.</span></h2>
-          <p class="text-muted mb-3" style="font-size:1rem;">Structured programs. Expert guidance. Real transformation.</p>
-          <div class="d-flex flex-wrap flex-lg-nowrap gap-3 gap-lg-3 justify-content-center">
+          <h2 class="fw-bold mb-3" style="font-size:clamp(1.9rem,3.4vw,2.9rem);line-height:1.12;"><span style="color:#1c1c1c;">Simple, Transparent Pricing.</span><br><span style="color:#1F4A35;">Life-Changing Results.</span></h2>
+          <p class="text-muted mb-4" style="font-size:1.05rem;">Structured programs. Expert guidance. Real transformation.</p>
+          <div class="d-flex flex-wrap gap-3 gap-md-4 justify-content-center">
             <div class="fb-stat d-flex align-items-center gap-2"><span class="text-primary flex-shrink-0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/><path d="M21 21v-2a4 4 0 0 0 -3 -3.85"/></svg></span><div class="lh-1 text-start"><div class="fw-bold">5000+</div><small class="text-muted">Lives Transformed</small></div></div>
             <div class="fb-stat d-flex align-items-center gap-2"><span class="text-primary flex-shrink-0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/></svg></span><div class="lh-1 text-start"><div class="fw-bold">Science-Backed</div><small class="text-muted">Approach</small></div></div>
             <div class="fb-stat d-flex align-items-center gap-2"><span class="text-primary flex-shrink-0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg></span><div class="lh-1 text-start"><div class="fw-bold">25+</div><small class="text-muted">Countries</small></div></div>
             <div class="fb-stat d-flex align-items-center gap-2"><span class="text-primary flex-shrink-0"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M19.5 12.572l-7.5 7.428l-7.5 -7.428a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"/></svg></span><div class="lh-1 text-start"><div class="fw-bold">Trusted by</div><small class="text-muted">Professionals</small></div></div>
-          </div>
-        </div>
-        <div class="col-lg-4">
-          <div class="fb-why p-4">
-            <h3 class="h6 fw-bold mb-3 d-flex align-items-start gap-2"><svg width="30" height="30" viewBox="0 0 24 24" class="flex-shrink-0"><path fill="#1F4A35" d="M12 2.5l7.5 3.2v5.1c0 4.7 -3.1 8 -7.5 9.7c-4.4 -1.7 -7.5 -5 -7.5 -9.7v-5.1z"/><path d="M8.5 12l2.4 2.4l4.6 -4.8" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Why AVN Programs Are Worth It</span></h3>
-            <ul class="list-unstyled d-flex flex-column gap-2 mb-0" style="font-size:.9rem;">
-              <li class="d-flex gap-2"><span class="fb-why-check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2l4 -4"/></svg></span>Expert-designed by 18+ years of experience</li>
-              <li class="d-flex gap-2"><span class="fb-why-check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2l4 -4"/></svg></span>Science-backed yogic wellness systems</li>
-              <li class="d-flex gap-2"><span class="fb-why-check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2l4 -4"/></svg></span>Practical, proven &amp; results-driven</li>
-              <li class="d-flex gap-2"><span class="fb-why-check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2l4 -4"/></svg></span>Structured for busy professionals</li>
-            </ul>
           </div>
         </div>
       </div>
@@ -2298,7 +2295,7 @@ export const homepageHtml = `
           <div class="mb-3"><svg width="26" height="14" viewBox="0 0 40 14" fill="none"><path d="M2 7h12M26 7h12" stroke="#C2A35A" stroke-width="1.4" stroke-linecap="round"/><path d="M20 3c1.5 1.2 1.5 5.8 0 8c-1.5 -2.2 -1.5 -6.8 0 -8z" fill="#C2A35A"/></svg></div>
           <p class="ct-lead mb-4">Not sure which program fits your needs? Book a free wellness consultation and we&rsquo;ll help you identify the most suitable program based on your lifestyle, stress levels, health concerns and wellness goals.</p>
           <div class="row g-3 mb-4">
-            <div class="col-6 col-md-3 text-center text-md-start"><span class="ct-prop-ico d-inline-block mb-1"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="9.5" cy="12" rx="3.4" ry="7.5" transform="rotate(-20 9.5 12)"/><ellipse cx="14.5" cy="12" rx="3.4" ry="7.5" transform="rotate(20 14.5 12)"/></svg></span><div class="ct-prop-t">Ancient Wisdom</div><div class="ct-prop-d">Rooted in Yoga Philosophy</div></div>
+            <div class="col-6 col-md-3 text-center text-md-start"><span class="ct-prop-ico d-inline-block mb-1"><span class="ic-lotus" style="width:30px;height:30px;"></span></span><div class="ct-prop-t">Ancient Wisdom</div><div class="ct-prop-d">Rooted in Yoga Philosophy</div></div>
             <div class="col-6 col-md-3 text-center text-md-start"><span class="ct-prop-ico d-inline-block mb-1"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="9" ry="3.6" transform="rotate(120 12 12)"/></svg></span><div class="ct-prop-t">Modern Approach</div><div class="ct-prop-d">Structured, Practical &amp; Evidence-Informed</div></div>
             <div class="col-6 col-md-3 text-center text-md-start"><span class="ct-prop-ico d-inline-block mb-1"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a4 4 0 1 0 0 -8a4 4 0 0 0 0 8"/><path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"/><path d="M16 5.5a3.5 3.5 0 0 1 0 7"/><path d="M21 21v-2a3.5 3.5 0 0 0 -3 -3.4"/></svg></span><div class="ct-prop-t">Human-Centered</div><div class="ct-prop-d">Real People. Real Transformations.</div></div>
             <div class="col-6 col-md-3 text-center text-md-start"><span class="ct-prop-ico d-inline-block mb-1"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M3.6 9h16.8"/><path d="M3.6 15h16.8"/><path d="M11.5 3a17 17 0 0 0 0 18"/><path d="M12.5 3a17 17 0 0 1 0 18"/></svg></span><div class="ct-prop-t">Global Impact</div><div class="ct-prop-d">Supporting Professionals Worldwide</div></div>
@@ -2370,7 +2367,7 @@ export const homepageHtml = `
       <div class="container py-4">
         <div class="row g-3 text-center text-md-start">
           <div class="col-md-3 col-6"><div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-2 gap-md-3"><span class="ct-feat-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2z"/><path d="M9 10m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M7 16a3 3 0 0 1 6 0"/><path d="M15 10h3"/><path d="M15 13h2"/></svg></span><div><div class="ct-feat-t">Personalized Guidance</div><div class="ct-feat-d">Tailored to your unique needs</div></div></div></div>
-          <div class="col-md-3 col-6"><div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-2 gap-md-3"><span class="ct-feat-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4c1.8 2.2 2.8 4.4 2.8 6.6a2.8 2.8 0 1 1 -5.6 0c0 -2.2 1 -4.4 2.8 -6.6z"/><path d="M7 7.5c.3 2.6 1.2 4.7 2.7 6.3"/><path d="M17 7.5c-.3 2.6 -1.2 4.7 -2.7 6.3"/><path d="M3.5 11c1 3.8 3.4 6.3 6.5 7.2"/><path d="M20.5 11c-1 3.8 -3.4 6.3 -6.5 7.2"/></svg></span><div><div class="ct-feat-t">Expert Support</div><div class="ct-feat-d">Guided by experienced wellness professionals</div></div></div></div>
+          <div class="col-md-3 col-6"><div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-2 gap-md-3"><span class="ct-feat-ico"><span class="ic-lotus" style="width:24px;height:24px;"></span></span><div><div class="ct-feat-t">Expert Support</div><div class="ct-feat-d">Guided by experienced wellness professionals</div></div></div></div>
           <div class="col-md-3 col-6"><div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-2 gap-md-3"><span class="ct-feat-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v9l6.5 6.5"/><path d="M12 12l-6.5 6.5"/><circle cx="12" cy="12" r="2"/></svg></span><div><div class="ct-feat-t">Holistic Approach</div><div class="ct-feat-d">Body, mind &amp; lifestyle in perfect balance</div></div></div></div>
           <div class="col-md-3 col-6"><div class="d-flex flex-column flex-md-row align-items-center align-items-md-start gap-2 gap-md-3"><span class="ct-feat-ico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a12 12 0 0 0 8.5 3a12 12 0 0 1 -8.5 15a12 12 0 0 1 -8.5 -15a12 12 0 0 0 8.5 -3"/><path d="M12 11m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M12 12v3"/></svg></span><div><div class="ct-feat-t">Confidential &amp; Safe</div><div class="ct-feat-d">Your privacy and well-being are our priority</div></div></div></div>
         </div>
@@ -2559,12 +2556,12 @@ export const homepageHtml = `
             </div>
             <p class="ftr-desc mb-3">Transforming their lives with science-backed yogic wellness.</p>
             <div class="ftr-flags mb-2">
-              <span class="ftr-flag">&#127470;&#127475;</span>
-              <span class="ftr-flag">&#127482;&#127480;</span>
-              <span class="ftr-flag">&#127468;&#127463;</span>
-              <span class="ftr-flag">&#127462;&#127466;</span>
-              <span class="ftr-flag">&#127480;&#127468;</span>
-              <span class="ftr-flag">&#127462;&#127482;</span>
+              <span class="ftr-flag"><img src="https://flagcdn.com/in.svg" alt="India" width="20" height="20" loading="lazy"></span>
+              <span class="ftr-flag"><img src="https://flagcdn.com/us.svg" alt="United States" width="20" height="20" loading="lazy"></span>
+              <span class="ftr-flag"><img src="https://flagcdn.com/gb.svg" alt="United Kingdom" width="20" height="20" loading="lazy"></span>
+              <span class="ftr-flag"><img src="https://flagcdn.com/ae.svg" alt="United Arab Emirates" width="20" height="20" loading="lazy"></span>
+              <span class="ftr-flag"><img src="https://flagcdn.com/sg.svg" alt="Singapore" width="20" height="20" loading="lazy"></span>
+              <span class="ftr-flag"><img src="https://flagcdn.com/au.svg" alt="Australia" width="20" height="20" loading="lazy"></span>
             </div>
             <div class="fw-bold" style="color:#1c1c1c;font-size:.92rem;">25+ Countries Worldwide</div>
           </div>

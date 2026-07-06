@@ -16,9 +16,10 @@ export const ACCENT_NAMES = Object.keys(ACCENTS);
 const E = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const acc = (a) => ACCENTS[a] || ACCENTS.green;
 const ic = (name, w) => `<svg xmlns="http://www.w3.org/2000/svg" width="${w || 26}" height="${w || 26}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">${ICONS[name] || ICONS.lotus}</svg>`;
-// Use the supplied artwork files for the lotus & spine program icons; other icons stay inline line-art.
-const iconImg = (name, w) => (name === 'lotus' || name === 'spine')
-  ? `<img src="/${name}.svg" alt="" style="width:${w || 32}px;height:${w || 32}px;object-fit:contain;">`
+// Use the supplied artwork (lotus / spine / yoga→meditation) as CSS masks so they inherit the icon colour.
+const ASSET_IC = { lotus: 'ic-lotus', spine: 'ic-spine', yoga: 'ic-meditation' };
+const iconImg = (name, w) => ASSET_IC[name]
+  ? `<span class="${ASSET_IC[name]}" style="width:${w || 32}px;height:${w || 32}px;"></span>`
   : ic(name, w);
 const CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="flex-shrink-0 mt-1"><path d="M5 12l5 5l10 -10"/></svg>';
 const CAL = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></svg>';
@@ -110,10 +111,14 @@ export function renderFaq(list) {
   const CHEV = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6l6 -6"/></svg>';
   return (list || []).map((f, i) => {
     const icon = FAQ_ICONS[i % FAQ_ICONS.length];
+    // First question uses the lotus artwork asset (rendered as a mask so it inherits the icon colour).
+    const iconMarkup = i === 0
+      ? '<span class="ic-lotus" style="width:24px;height:24px;"></span>'
+      : `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${icon}</svg>`;
     return `<div class="faq-item">
       <button class="faq-q" type="button" data-bs-toggle="collapse" data-bs-target="#faqItem${i}" aria-expanded="false" aria-controls="faqItem${i}">
         <span class="faq-num">${i + 1}</span>
-        <span class="faq-ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${icon}</svg></span>
+        <span class="faq-ic">${iconMarkup}</span>
         <span class="faq-qt">${E(f.q)}</span>
         <span class="faq-chev">${CHEV}</span>
       </button>
