@@ -48,11 +48,6 @@ export const adminHtml = `
         </div>
         <nav class="nav flex-column p-2 gap-1 flex-grow-1">
           <button class="nav-link text-start active" data-panel="editor">✏️ Visual Editor</button>
-          <button class="nav-link text-start" data-panel="programs">📋 Programs</button>
-          <button class="nav-link text-start" data-panel="pricing">💳 Pricing</button>
-          <button class="nav-link text-start" data-panel="testimonials">⭐ Testimonials</button>
-          <button class="nav-link text-start" data-panel="faq">❓ FAQ</button>
-          <button class="nav-link text-start" data-panel="gallery">🖼️ Gallery</button>
           <button class="nav-link text-start" data-panel="enquiries">📨 Enquiries <span id="enqCount"
               class="badge bg-primary ms-1 d-none">0</span></button>
         </nav>
@@ -70,11 +65,13 @@ export const adminHtml = `
           <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
             <div>
               <h2 class="h5 fw-bold mb-1">Visual Editor</h2>
-              <p class="small text-muted mb-0">Click any <strong>text</strong> to edit it. Click any
-                <strong>image</strong> to replace it. Then press Save.</p>
+              <p class="small text-muted mb-0">Click <strong>text</strong> to edit, <strong>images</strong> to
+                replace. Hover cards to <strong>edit / delete</strong>; use <strong>+ Add</strong> to add cards.</p>
             </div>
-            <div class="d-flex align-items-center gap-3">
+            <div class="d-flex align-items-center gap-2 flex-wrap">
               <span id="veStatus" class="small text-muted"></span>
+              <button id="veHistory" class="btn btn-light btn-sm">⟲ History</button>
+              <button id="veDiscard" class="btn btn-light btn-sm d-none">Discard</button>
               <button id="veSave" class="btn btn-primary">Save Changes</button>
             </div>
           </div>
@@ -88,13 +85,6 @@ export const adminHtml = `
           <div id="veCanvas" class="border rounded-4 overflow-auto bg-white"
             style="position: relative; max-height: calc(100vh - 230px);"></div>
         </div>
-
-        <!-- Structured section panels (filled by JS) -->
-        <div id="panel-programs" class="d-none"></div>
-        <div id="panel-pricing" class="d-none"></div>
-        <div id="panel-testimonials" class="d-none"></div>
-        <div id="panel-faq" class="d-none"></div>
-        <div id="panel-gallery" class="d-none"></div>
 
         <!-- Enquiries -->
         <div id="panel-enquiries" class="d-none">

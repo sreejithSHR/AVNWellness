@@ -172,6 +172,35 @@ export default function SiteScripts() {
         setTimeout(() => els.forEach((e) => e.classList.add('in')), 4000);
       }
 
+      // ---- Back to top ----
+      if (!document.getElementById('backToTop')) {
+        const toTop = document.createElement('button');
+        toTop.id = 'backToTop';
+        toTop.type = 'button';
+        toTop.setAttribute('aria-label', 'Back to top');
+        toTop.innerHTML = '↑';
+        Object.assign(toTop.style, {
+          position: 'fixed', right: '20px', bottom: '20px', zIndex: '1050',
+          width: '46px', height: '46px', borderRadius: '50%', border: 'none',
+          background: '#1F4A35', color: '#fff', fontSize: '22px', lineHeight: '46px', padding: '0',
+          cursor: 'pointer', boxShadow: '0 6px 20px rgba(0,0,0,.25)',
+          opacity: '0', visibility: 'hidden', transform: 'translateY(8px)',
+          transition: 'opacity .25s, visibility .25s, transform .25s, background .2s',
+        });
+        document.body.appendChild(toTop);
+        toTop.addEventListener('mouseenter', () => { toTop.style.background = '#C2A35A'; });
+        toTop.addEventListener('mouseleave', () => { toTop.style.background = '#1F4A35'; });
+        toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        const toggleTop = () => {
+          const show = window.scrollY > 400;
+          toTop.style.opacity = show ? '1' : '0';
+          toTop.style.visibility = show ? 'visible' : 'hidden';
+          toTop.style.transform = show ? 'none' : 'translateY(8px)';
+        };
+        window.addEventListener('scroll', toggleTop, { passive: true });
+        toggleTop();
+      }
+
       // ---- Smooth scroll + active nav ----
       document.querySelectorAll('.nav-link[href^="#"]').forEach((link) => {
         link.addEventListener('click', function (e) {

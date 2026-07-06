@@ -77,6 +77,7 @@ export function ensureInit() {
         concern TEXT, program TEXT, message TEXT, source TEXT, status TEXT DEFAULT 'new',
         created_at TIMESTAMPTZ DEFAULT now())`;
       await sql`CREATE TABLE IF NOT EXISTS images (id TEXT PRIMARY KEY, mime TEXT, data TEXT, created_at TIMESTAMPTZ DEFAULT now())`;
+      await sql`CREATE TABLE IF NOT EXISTS content_versions (id SERIAL PRIMARY KEY, data JSONB NOT NULL, label TEXT, created_at TIMESTAMPTZ DEFAULT now())`;
       const r = await sql`SELECT data FROM site_content WHERE id = 1`;
       if (!r.length) await sql`INSERT INTO site_content (id, data) VALUES (1, ${JSON.stringify(DEFAULT_CONTENT)}::jsonb)`;
       // drop legacy nested keys from the earlier form-based model
@@ -106,11 +107,35 @@ export async function getContent() {
   return deepMerge(DEFAULT_CONTENT, data);
 }
 
-export async function saveContent(patch) {
+const MAX_VERSIONS = 40;
+async function snapshot(json, label) {
+  await sql`INSERT INTO content_versions (data, label) VALUES (${json}::jsonb, ${label || null})`;
+  await sql`DELETE FROM content_versions WHERE id NOT IN (SELECT id FROM content_versions ORDER BY id DESC LIMIT ${MAX_VERSIONS})`;
+}
+
+export async function saveContent(patch, label) {
   await ensureInit();
   const merged = deepMerge(await getContent(), patch || {});
   const json = JSON.stringify(merged);
   await sql`INSERT INTO site_content (id, data, updated_at) VALUES (1, ${json}::jsonb, now())
             ON CONFLICT (id) DO UPDATE SET data = ${json}::jsonb, updated_at = now()`;
+  await snapshot(json, label || 'Edit');
   return merged;
+}
+
+export async function listVersions() {
+  await ensureInit();
+  return await sql`SELECT id, label, created_at FROM content_versions ORDER BY id DESC LIMIT ${MAX_VERSIONS}`;
+}
+
+export async function restoreVersion(id) {
+  await ensureInit();
+  const r = await sql`SELECT data FROM content_versions WHERE id = ${id}`;
+  if (!r.length) throw new Error('Version not found');
+  let data = r[0].data;
+  if (typeof data === 'string') { try { data = JSON.parse(data); } catch { data = {}; } }
+  const json = JSON.stringify(data);
+  await sql`UPDATE site_content SET data = ${json}::jsonb, updated_at = now() WHERE id = 1`;
+  await snapshot(json, 'Restored');
+  return deepMerge(DEFAULT_CONTENT, data);
 }

@@ -13,7 +13,7 @@ export const homepageHtml = `
   .program-photo{pointer-events:none;}
   /* Hero full-bleed image — soft left-edge blend into the cream background */
   .hero-top{position:relative;}
-  .hero-img-bleed{position:absolute;top:0;right:0;height:100%;width:46%;}
+  .hero-img-bleed{position:absolute;top:0;right:0;height:100%;width:46%;z-index:2;}
   .hero-img-bleed > img{width:100%;height:100%;object-fit:cover;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 30%);mask-image:linear-gradient(to right,transparent 0,#000 30%);}
   .hero-quote-card{position:absolute;top:22%;right:1.5rem;max-width:240px;}
   @media (max-width:991.98px){.hero-img-bleed{display:none;}}
@@ -2582,6 +2582,9 @@ export const homepageHtml = `
               <a href="#" aria-label="LinkedIn" class="ftr-social"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M6.94 5a1.94 1.94 0 1 1 -3.88 0a1.94 1.94 0 0 1 3.88 0zM3.5 8.5h3v12h-3zM9 8.5h2.9v1.6h.04c.4 -.76 1.4 -1.56 2.86 -1.56c3.06 0 3.7 2 3.7 4.6v6.36h-3v-5.64c0 -1.34 -.02 -3.06 -1.87 -3.06c-1.87 0 -2.16 1.46 -2.16 2.96v5.74h-3z"/></svg></a>
             </div>
           </div>
+        </div>
+        <div class="text-center pt-3 mt-2 border-top border-light border-opacity-10" data-cms-skip>
+          <small class="text-white text-opacity-50">Created by <a href="https://envidoxsolutions.com/" target="_blank" rel="noopener" class="text-white text-opacity-75 text-decoration-none fw-semibold">Envidox Solutions</a></small>
         </div>
       </div>
     </div>

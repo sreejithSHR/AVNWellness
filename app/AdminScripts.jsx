@@ -17,24 +17,33 @@ export default function AdminScripts() {
       st.textContent = `
         .admin-sidebar{width:232px;min-height:100vh;position:sticky;top:0;z-index:1040;}
         .admin-sidebar .nav-link{color:#444 !important;border-radius:.5rem;font-size:.92rem;}
-        .admin-sidebar .nav-link.active,
-        .admin-sidebar .nav-link.active:hover,
-        .admin-sidebar .nav-link.active:focus{background:#1F4A35 !important;color:#fff !important;}
-        .admin-sidebar .nav-link:hover:not(.active),
-        .admin-sidebar .nav-link:focus:not(.active){background:#f0ece2;color:#1F4A35 !important;}
+        .admin-sidebar .nav-link.active,.admin-sidebar .nav-link.active:hover,.admin-sidebar .nav-link.active:focus{background:#1F4A35 !important;color:#fff !important;}
+        .admin-sidebar .nav-link:hover:not(.active),.admin-sidebar .nav-link:focus:not(.active){background:#f0ece2;color:#1F4A35 !important;}
         .admin-main{padding:1.25rem 1.5rem;}
         .admin-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:1035;}
-        @media(max-width:991.98px){
-          .admin-sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);transition:transform .2s;}
-          .admin-sidebar.open{transform:none;}
-          .admin-main{padding:1rem;}
-        }
+        @media(max-width:991.98px){.admin-sidebar{position:fixed;left:0;top:0;bottom:0;transform:translateX(-100%);transition:transform .2s;}.admin-sidebar.open{transform:none;}.admin-main{padding:1rem;}}
         #veCanvas .sticky-top{position:static!important;}
         #veCanvas .reveal{opacity:1!important;transform:none!important;}
+        #veCanvas #galleryGrid .gallery-extra{display:block!important;}
         #veCanvas .cms-text:hover{outline:1px dashed rgba(31,74,53,.45);outline-offset:2px;cursor:text;border-radius:3px;}
         #veCanvas .cms-text:focus{outline:2px solid #C2A35A;outline-offset:2px;background:rgba(194,163,90,.12);border-radius:3px;}
         #veCanvas .ve-img{cursor:pointer;}
-        #veCanvas .ve-img:hover{outline:3px dashed #C2A35A;outline-offset:3px;}`;
+        #veCanvas .ve-img:hover{outline:3px dashed #C2A35A;outline-offset:3px;}
+        #veCanvas .ve-img-btn{position:absolute;z-index:36;margin:8px;border:none;border-radius:8px;padding:4px 9px;background:rgba(255,255,255,.95);color:#1F4A35;font-size:12px;font-weight:600;box-shadow:0 2px 8px rgba(0,0,0,.32);cursor:pointer;opacity:.9;transition:opacity .15s,background .15s;white-space:nowrap;}
+        #veCanvas .ve-img-btn:hover{opacity:1;background:#C2A35A;color:#fff;}
+        #veCanvas .ve-bg{outline-offset:-3px;}
+        #veCanvas .ve-bg:hover{outline:3px dashed #C2A35A;}
+        #veCanvas .ve-bg-btn{position:absolute;top:12px;left:12px;z-index:35;border:none;border-radius:8px;padding:7px 13px;background:#fff;color:#1F4A35;font-size:13px;font-weight:600;box-shadow:0 3px 12px rgba(0,0,0,.3);cursor:pointer;opacity:0;transition:opacity .15s;}
+        #veCanvas .ve-bg:hover>.ve-bg-btn{opacity:1;}
+        #veCanvas .ve-card-wrap{position:relative;}
+        #veCanvas .ve-card-ctrl{position:absolute;top:10px;right:10px;z-index:30;display:flex;gap:5px;opacity:0;transition:opacity .15s;}
+        #veCanvas .ve-card-wrap:hover>.ve-card-ctrl{opacity:1;}
+        #veCanvas .ve-card-ctrl button{border:none;border-radius:8px;width:34px;height:34px;background:#fff;box-shadow:0 3px 12px rgba(0,0,0,.28);cursor:pointer;font-size:15px;line-height:1;}
+        #veCanvas .ve-card-ctrl .ve-del{color:#c0392b;}
+        #veCanvas .ve-add-wrap{width:100%;flex:0 0 100%;}
+        #veCanvas .ve-add-wrap .ve-add{border-style:dashed;}
+        .ve-modal-backdrop{position:fixed;inset:0;background:rgba(15,30,25,.55);z-index:3000;display:flex;align-items:flex-start;justify-content:center;padding:3vh 1rem;overflow:auto;}
+        .ve-modal{background:#fff;border-radius:16px;max-width:560px;width:100%;padding:1.5rem;box-shadow:0 20px 60px rgba(0,0,0,.35);}`;
       document.head.appendChild(st);
     }
 
@@ -52,11 +61,53 @@ export default function AdminScripts() {
     const escA = (s) => String(s ?? '').replace(/"/g, '&quot;');
     async function uploadFile(file) { const fd = new FormData(); fd.append('image', file); const { url } = await api('POST', '/upload', fd, true); return url; }
 
+    // Field schemas (also used by the in-canvas card modal)
+    const SCHEMAS = {
+      programs: { title: 'Program', fields: [
+        { k: 'name', label: 'Name' }, { k: 'tagline', label: 'Tagline' }, { k: 'photo', label: 'Photo', type: 'image' },
+        { k: 'accent', label: 'Accent colour', type: 'select', opts: ACCENT_NAMES }, { k: 'icon', label: 'Icon', type: 'select', opts: ICON_NAMES },
+        { k: 'duration', label: 'Duration' }, { k: 'time', label: 'Time / Day' }, { k: 'schedule', label: 'Schedule' },
+        { k: 'benefits', label: 'Key Benefits (one per line)', type: 'lines' }, { k: 'bestFor', label: 'Best For', type: 'textarea' },
+      ], blank: { accent: 'green', icon: 'yoga', photo: '/assets/images/program-1.jpg', name: 'New Program', tagline: 'Short tagline.', duration: '8 Weeks', time: '60 Min', schedule: '5 Days/Wk', benefits: ['Benefit one', 'Benefit two'], bestFor: 'Who this is for' } },
+      pricing: { title: 'Pricing plan', fields: [
+        { k: 'name', label: 'Name' }, { k: 'tagline', label: 'Tagline' },
+        { k: 'accent', label: 'Accent colour', type: 'select', opts: ACCENT_NAMES }, { k: 'icon', label: 'Icon', type: 'select', opts: ICON_NAMES },
+        { k: 'badge', label: 'Top badge (MOST POPULAR / RECOMMENDED, blank for none)' },
+        { k: 'price', label: 'Price (₹)' }, { k: 'regular', label: 'Regular price (₹)' }, { k: 'save', label: 'Save %' }, { k: 'intl', label: 'International price' },
+        { k: 'features', label: 'Features (one per line)', type: 'lines' },
+      ], blank: { accent: 'green', icon: 'yoga', badge: '', name: 'New Plan', tagline: '', price: '1999', regular: '6999', save: '71', intl: '$25', features: ['Feature one', 'Feature two'] } },
+      testimonials: { title: 'Testimonial', fields: [
+        { k: 'name', label: 'Name' }, { k: 'role', label: 'Role / Location' }, { k: 'age', label: 'Age' }, { k: 'stars', label: 'Stars (1–5)' },
+        { k: 'programTaken', label: 'Program Taken' }, { k: 'healthIssues', label: 'Health Issues' }, { k: 'benefitsGained', label: 'Benefits Gained' },
+        { k: 'avatar', label: 'Photo', type: 'image' },
+      ], blank: { stars: 5, name: 'New Name', role: 'Role, City', age: '35', programTaken: 'Professional Stress Reset', healthIssues: 'Stress, Poor Sleep', benefitsGained: 'Better sleep, Calmer mind', avatar: '/assets/images/avatar/avatar-1.jpg' } },
+      faq: { title: 'FAQ', fields: [{ k: 'q', label: 'Question' }, { k: 'a', label: 'Answer', type: 'textarea' }], blank: { q: 'New question?', a: 'Answer goes here.' } },
+    };
+    const LABELS = { programs: 'Program', pricing: 'Plan', testimonials: 'Testimonial', faq: 'FAQ', gallery: 'Image' };
+    const GRIDS = [['programsGrid', 'programs'], ['pricingGrid', 'pricing'], ['testimonialsGrid', 'testimonials'], ['faqAccordion', 'faq'], ['galleryGrid', 'gallery']];
+
+    function fieldInput(f, val) {
+      if (f.type === 'select') return `<select class="form-select form-select-sm" data-f="${f.k}">${f.opts.map((o) => `<option ${o === val ? 'selected' : ''}>${o}</option>`).join('')}</select>`;
+      if (f.type === 'textarea') return `<textarea class="form-control form-control-sm" data-f="${f.k}" rows="2">${esc(val)}</textarea>`;
+      if (f.type === 'lines') return `<textarea class="form-control form-control-sm" data-f="${f.k}" data-lines rows="4">${esc((val || []).join('\n'))}</textarea>`;
+      if (f.type === 'image') return `<div class="d-flex gap-2 align-items-center"><img src="${escA(val || '')}" class="rounded" style="width:48px;height:48px;object-fit:cover;border:1px solid #ddd;background:#f5f5f5;"><input type="file" accept="image/*" class="form-control form-control-sm" data-imgf="${f.k}"><input type="hidden" data-f="${f.k}" value="${escA(val || '')}"></div>`;
+      return `<input class="form-control form-control-sm" data-f="${f.k}" value="${escA(val)}">`;
+    }
+    function wireModalUploads(scope) {
+      scope.querySelectorAll('input[type=file][data-imgf]').forEach((inp) => inp.addEventListener('change', async () => {
+        const f = inp.files[0]; if (!f) return;
+        try { const url = await uploadFile(f); const wrap = inp.closest('.d-flex'); wrap.querySelector('img').src = url; wrap.querySelector('[data-f]').value = url; } catch (e) { alert('Upload failed: ' + e.message); }
+      }));
+    }
+
     let content = {};
+    let dirtyStructured = false;
 
     // ---------------- Visual editor ----------------
     let veItems = [], veInitial = {}, veVideoInitial = '';
-    const veStatus = (t) => { const e = $('#veStatus'); if (e) { e.textContent = t; if (t) setTimeout(() => { if (e.textContent === t) e.textContent = ''; }, 3000); } };
+    const veStatus = (t, keep) => { const e = $('#veStatus'); if (e) { e.textContent = t; if (t && !keep) setTimeout(() => { if (e.textContent === t) e.textContent = ''; }, 3000); } };
+    function markDirty() { dirtyStructured = true; $('#veDiscard').classList.remove('d-none'); veStatus('Unsaved changes', true); }
+    function clearDirty() { dirtyStructured = false; $('#veDiscard').classList.add('d-none'); }
 
     function initVisualEditor() {
       const canvas = $('#veCanvas');
@@ -66,145 +117,174 @@ export default function AdminScripts() {
       applyOverrides(veItems, content);
       veInitial = {};
       veItems.forEach((it) => {
-        veInitial[it.key] = it.type === 'text' ? it.el.textContent : it.el.getAttribute('src');
-        if (it.type === 'text') { it.el.setAttribute('contenteditable', 'true'); it.el.setAttribute('spellcheck', 'false'); }
-        else { it.el.classList.add('ve-img'); it.el.title = 'Click to replace image'; it.el.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); replaceImage(it); }); }
+        if (it.type === 'text') { veInitial[it.key] = it.el.textContent; it.el.setAttribute('contenteditable', 'true'); it.el.setAttribute('spellcheck', 'false'); }
+        else if (it.type === 'img') { veInitial[it.key] = it.el.getAttribute('src'); addImgControl(it); }
+        else if (it.type === 'bg') { veInitial[it.key] = it.el.getAttribute('data-cms-bg'); addBgControl(it); }
       });
       $('#veVideo').value = content['video.youtube'] || '';
       veVideoInitial = $('#veVideo').value;
-      canvas.addEventListener('click', (e) => {
-        if (e.target.classList && e.target.classList.contains('ve-img')) return;
-        const a = e.target.closest('a, button, [data-bs-toggle]');
-        if (a) { e.preventDefault(); e.stopPropagation(); }
-      }, true);
+      decorateStructured(canvas);
+      if (!canvas.dataset.blocker) {
+        canvas.dataset.blocker = '1';
+        canvas.addEventListener('click', (e) => {
+          if (e.target.closest('.ve-card-ctrl, .ve-add-wrap, .cms-text, .ve-bg-btn, .ve-img-btn')) return;
+          if (e.target.classList && e.target.classList.contains('ve-img')) return;
+          const a = e.target.closest('a, button, [data-bs-toggle]');
+          if (a) { e.preventDefault(); e.stopPropagation(); }
+        }, true);
+      }
     }
     function replaceImage(it) {
       const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
-      input.onchange = async () => { const f = input.files[0]; if (!f) return; veStatus('Uploading…'); try { it.el.setAttribute('src', await uploadFile(f)); veStatus('Image replaced — remember to Save'); } catch (e) { alert('Upload failed: ' + e.message); veStatus(''); } };
+      input.onchange = async () => { const f = input.files[0]; if (!f) return; veStatus('Uploading…', true); try { it.el.setAttribute('src', await uploadFile(f)); veStatus('Image replaced — remember to Save'); } catch (e) { alert('Upload failed: ' + e.message); veStatus(''); } };
       input.click();
     }
+    function addImgControl(it) {
+      const img = it.el;
+      img.classList.add('ve-img');
+      img.title = 'Click to replace image';
+      img.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); replaceImage(it); });
+      const parent = img.parentElement;
+      if (!parent) return;
+      if (getComputedStyle(parent).position === 'static') parent.style.position = 'relative';
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 've-img-btn'; btn.textContent = '🖼 Change';
+      btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); replaceImage(it); });
+      parent.appendChild(btn);
+      const place = () => { btn.style.top = img.offsetTop + 'px'; btn.style.left = img.offsetLeft + 'px'; };
+      place();
+      if (!img.complete) img.addEventListener('load', place, { once: true });
+      setTimeout(place, 300);
+    }
+    function addBgControl(it) {
+      it.el.classList.add('ve-bg');
+      if (getComputedStyle(it.el).position === 'static') it.el.style.position = 'relative';
+      const btn = document.createElement('button');
+      btn.type = 'button'; btn.className = 've-bg-btn'; btn.textContent = '🖼 Change background';
+      it.el.appendChild(btn);
+      btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); replaceBg(it); });
+    }
+    function replaceBg(it) {
+      const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
+      input.onchange = async () => { const f = input.files[0]; if (!f) return; veStatus('Uploading…', true); try { const url = await uploadFile(f); it.el.style.backgroundImage = `url("${url}")`; it.el.setAttribute('data-cms-bg', url); veStatus('Background replaced — remember to Save'); } catch (e) { alert('Upload failed: ' + e.message); veStatus(''); } };
+      input.click();
+    }
+
+    function reRenderSections() {
+      const canvas = $('#veCanvas');
+      applySections(canvas, content);
+      decorateStructured(canvas);
+    }
+
+    function decorateStructured(canvas) {
+      GRIDS.forEach(([gid, section]) => {
+        const grid = canvas.querySelector('#' + gid);
+        if (!grid) return;
+        const cards = Array.from(grid.children).filter((c) => !c.classList.contains('ve-add-wrap'));
+        cards.forEach((card, idx) => {
+          card.classList.add('ve-card-wrap');
+          const ctrl = document.createElement('div');
+          ctrl.className = 've-card-ctrl';
+          const editIcon = section === 'gallery' ? '🖼' : '✎';
+          ctrl.innerHTML = `<button class="ve-edit" title="Edit">${editIcon}</button><button class="ve-del" title="Delete">🗑</button>`;
+          card.appendChild(ctrl);
+          ctrl.querySelector('.ve-edit').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); section === 'gallery' ? replaceGallery(idx) : openCardModal(section, idx); });
+          ctrl.querySelector('.ve-del').addEventListener('click', (e) => {
+            e.preventDefault(); e.stopPropagation();
+            if (confirm('Delete this ' + LABELS[section].toLowerCase() + '?')) { content[section].splice(idx, 1); markDirty(); reRenderSections(); }
+          });
+        });
+        const addWrap = document.createElement('div');
+        addWrap.className = 've-add-wrap text-center mt-3';
+        addWrap.innerHTML = `<button class="btn btn-outline-dark btn-sm ve-add">+ Add ${LABELS[section]}</button>`;
+        grid.appendChild(addWrap);
+        addWrap.querySelector('.ve-add').addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); section === 'gallery' ? addGallery() : addCard(section); });
+      });
+    }
+
+    function addCard(section) {
+      content[section] = content[section] || [];
+      content[section].push(JSON.parse(JSON.stringify(SCHEMAS[section].blank)));
+      markDirty(); reRenderSections();
+      openCardModal(section, content[section].length - 1);
+    }
+    function addGallery() {
+      const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
+      input.onchange = async () => { const f = input.files[0]; if (!f) return; veStatus('Uploading…', true); try { const url = await uploadFile(f); content.gallery = content.gallery || []; content.gallery.push(url); markDirty(); reRenderSections(); veStatus(''); } catch (e) { alert('Upload failed: ' + e.message); } };
+      input.click();
+    }
+    function replaceGallery(idx) {
+      const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
+      input.onchange = async () => { const f = input.files[0]; if (!f) return; try { content.gallery[idx] = await uploadFile(f); markDirty(); reRenderSections(); } catch (e) { alert('Upload failed: ' + e.message); } };
+      input.click();
+    }
+
+    function openCardModal(section, idx) {
+      const schema = SCHEMAS[section];
+      const item = content[section][idx] || {};
+      const overlay = document.createElement('div');
+      overlay.className = 've-modal-backdrop';
+      const fields = schema.fields.map((f) => `<div class="mb-2"><label class="form-label small mb-1 fw-semibold">${f.label}</label>${fieldInput(f, item[f.k])}</div>`).join('');
+      overlay.innerHTML = `<div class="ve-modal">
+        <div class="d-flex justify-content-between align-items-center mb-3"><h3 class="h6 fw-bold mb-0">Edit ${schema.title}</h3><button class="btn-close ve-x"></button></div>
+        <div>${fields}</div>
+        <div class="d-flex justify-content-end gap-2 mt-3"><button class="btn btn-light ve-cancel">Cancel</button><button class="btn btn-primary ve-apply">Apply</button></div></div>`;
+      document.body.appendChild(overlay);
+      wireModalUploads(overlay);
+      const close = () => overlay.remove();
+      overlay.querySelector('.ve-x').addEventListener('click', close);
+      overlay.querySelector('.ve-cancel').addEventListener('click', close);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+      overlay.querySelector('.ve-apply').addEventListener('click', () => {
+        const obj = {};
+        overlay.querySelectorAll('[data-f]').forEach((el) => { obj[el.dataset.f] = el.hasAttribute('data-lines') ? el.value.split('\n').map((x) => x.trim()).filter(Boolean) : el.value; });
+        content[section][idx] = obj;
+        markDirty(); reRenderSections(); close();
+      });
+    }
+
+    const curVal = (it) => it.type === 'text' ? it.el.textContent : it.type === 'img' ? it.el.getAttribute('src') : it.el.getAttribute('data-cms-bg');
     async function veSave() {
       const patch = {};
-      veItems.forEach((it) => { const cur = it.type === 'text' ? it.el.textContent : it.el.getAttribute('src'); if (cur !== veInitial[it.key]) patch[it.key] = cur; });
+      veItems.forEach((it) => { const cur = curVal(it); if (cur !== veInitial[it.key]) patch[it.key] = cur; });
       const vid = $('#veVideo').value.trim();
       if (vid !== veVideoInitial) patch['video.youtube'] = vid;
+      if (dirtyStructured) ['programs', 'pricing', 'testimonials', 'faq', 'gallery'].forEach((k) => { if (content[k]) patch[k] = content[k]; });
       if (!Object.keys(patch).length) { veStatus('No changes to save'); return; }
-      try { await api('PUT', '/content', patch); Object.keys(patch).forEach((k) => { if (k !== 'video.youtube') veInitial[k] = patch[k]; }); veVideoInitial = vid; Object.assign(content, patch); veStatus('Saved ✓ — now live on the site'); }
-      catch (e) { alert('Save failed: ' + e.message); }
+      veStatus('Saving…', true);
+      try {
+        const saved = await api('PUT', '/content', patch);
+        veItems.forEach((it) => { veInitial[it.key] = curVal(it); });
+        veVideoInitial = vid; content = saved; clearDirty();
+        veStatus('Saved ✓ — now live on the site');
+      } catch (e) { alert('Save failed: ' + e.message); veStatus(''); }
     }
 
-    // ---------------- Structured section editors ----------------
-    const SCHEMAS = {
-      programs: { title: 'Programs', fields: [
-        { k: 'name', label: 'Name' }, { k: 'tagline', label: 'Tagline' },
-        { k: 'photo', label: 'Photo', type: 'image' },
-        { k: 'accent', label: 'Accent colour', type: 'select', opts: ACCENT_NAMES },
-        { k: 'icon', label: 'Icon', type: 'select', opts: ICON_NAMES },
-        { k: 'duration', label: 'Duration' }, { k: 'time', label: 'Time / Day' }, { k: 'schedule', label: 'Schedule' },
-        { k: 'benefits', label: 'Key Benefits (one per line)', type: 'lines' }, { k: 'bestFor', label: 'Best For', type: 'textarea' },
-      ], blank: { accent: 'green', icon: 'yoga', photo: '/assets/images/program-1.jpg', name: 'New Program', tagline: 'Short tagline.', duration: '8 Weeks', time: '60 Min', schedule: '5 Days/Wk', benefits: ['Benefit one', 'Benefit two'], bestFor: 'Who this is for' } },
-      pricing: { title: 'Pricing', fields: [
-        { k: 'name', label: 'Name' }, { k: 'tagline', label: 'Tagline' },
-        { k: 'accent', label: 'Accent colour', type: 'select', opts: ACCENT_NAMES },
-        { k: 'icon', label: 'Icon', type: 'select', opts: ICON_NAMES },
-        { k: 'badge', label: 'Top badge (e.g. MOST POPULAR / RECOMMENDED, blank for none)' },
-        { k: 'price', label: 'Price (₹)' }, { k: 'regular', label: 'Regular price (₹)' }, { k: 'save', label: 'Save %' }, { k: 'intl', label: 'International price' },
-        { k: 'features', label: 'Features (one per line)', type: 'lines' },
-      ], blank: { accent: 'green', icon: 'yoga', badge: '', name: 'New Plan', tagline: '', price: '1999', regular: '6999', save: '71', intl: '$25', features: ['Feature one', 'Feature two'] } },
-      testimonials: { title: 'Testimonials', fields: [
-        { k: 'name', label: 'Name' }, { k: 'role', label: 'Role / Location' },
-        { k: 'age', label: 'Age' }, { k: 'stars', label: 'Stars (1–5)' },
-        { k: 'programTaken', label: 'Program Taken' },
-        { k: 'healthIssues', label: 'Health Issues' },
-        { k: 'benefitsGained', label: 'Benefits Gained' },
-        { k: 'avatar', label: 'Photo', type: 'image' },
-      ], blank: { stars: 5, name: 'New Name', role: 'Role, City', age: '35', programTaken: 'Professional Stress Reset', healthIssues: 'Stress, Poor Sleep', benefitsGained: 'Better sleep, Calmer mind', avatar: '/assets/images/avatar/avatar-1.jpg' } },
-      faq: { title: 'FAQ', fields: [
-        { k: 'q', label: 'Question' }, { k: 'a', label: 'Answer', type: 'textarea' },
-      ], blank: { q: 'New question?', a: 'Answer goes here.' } },
-    };
-
-    function fieldInput(f, val) {
-      if (f.type === 'select') return `<select class="form-select form-select-sm" data-f="${f.k}">${f.opts.map((o) => `<option ${o === val ? 'selected' : ''}>${o}</option>`).join('')}</select>`;
-      if (f.type === 'textarea') return `<textarea class="form-control form-control-sm" data-f="${f.k}" rows="2">${esc(val)}</textarea>`;
-      if (f.type === 'lines') return `<textarea class="form-control form-control-sm" data-f="${f.k}" data-lines rows="4">${esc((val || []).join('\n'))}</textarea>`;
-      if (f.type === 'image') return `<div class="d-flex gap-2 align-items-center"><img src="${escA(val || '')}" class="rounded" style="width:48px;height:48px;object-fit:cover;border:1px solid #ddd;background:#f5f5f5;"><input type="file" accept="image/*" class="form-control form-control-sm" data-imgf="${f.k}"><input type="hidden" data-f="${f.k}" value="${escA(val || '')}"></div>`;
-      return `<input class="form-control form-control-sm" data-f="${f.k}" value="${escA(val)}">`;
-    }
-    function itemCard(schema, item, idx) {
-      const fields = schema.fields.map((f) => `<div class="mb-2"><label class="form-label small mb-1 fw-semibold">${f.label}</label>${fieldInput(f, item[f.k])}</div>`).join('');
-      return `<div class="card border rounded-3 mb-3 section-item"><div class="card-body p-3">
-        <div class="d-flex justify-content-between align-items-center mb-2"><span class="badge bg-light text-dark">#${idx + 1}</span>
-        <button class="btn btn-sm btn-light text-danger" data-remove>✕ Remove</button></div>${fields}</div></div>`;
-    }
-    function wireItemUploads(scope) {
-      scope.querySelectorAll('input[type=file][data-imgf]').forEach((inp) => {
-        inp.addEventListener('change', async () => {
-          const f = inp.files[0]; if (!f) return;
-          try { const url = await uploadFile(f); const wrap = inp.closest('.d-flex'); wrap.querySelector('img').src = url; wrap.querySelector('[data-f]').value = url; } catch (e) { alert('Upload failed: ' + e.message); }
-        });
-      });
-      scope.querySelectorAll('[data-remove]').forEach((b) => b.addEventListener('click', () => b.closest('.section-item').remove()));
-    }
-    function buildSectionPanel(name) {
-      const schema = SCHEMAS[name];
-      const panel = $('#panel-' + name);
-      panel.innerHTML = `
-        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-          <div><h2 class="h5 fw-bold mb-1">${schema.title}</h2><p class="small text-muted mb-0">Add, edit or remove cards. Then Save.</p></div>
-          <div class="d-flex gap-2 align-items-center"><span class="small text-muted" data-status></span>
-            <button class="btn btn-light" data-add>+ Add</button><button class="btn btn-primary" data-save>Save</button></div>
-        </div>
-        <div data-list></div>`;
-      const list = panel.querySelector('[data-list]');
-      const render = () => { list.innerHTML = (content[name] || []).map((it, i) => itemCard(schema, it, i)).join(''); wireItemUploads(list); };
-      render();
-      panel.querySelector('[data-add]').addEventListener('click', () => {
-        const card = document.createElement('div'); card.innerHTML = itemCard(schema, JSON.parse(JSON.stringify(schema.blank)), list.children.length);
-        list.appendChild(card.firstElementChild); wireItemUploads(list); list.lastElementChild.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      });
-      panel.querySelector('[data-save]').addEventListener('click', async () => {
-        const arr = [];
-        list.querySelectorAll('.section-item').forEach((it) => {
-          const obj = {};
-          it.querySelectorAll('[data-f]').forEach((el) => { obj[el.dataset.f] = el.hasAttribute('data-lines') ? el.value.split('\n').map((x) => x.trim()).filter(Boolean) : el.value; });
-          arr.push(obj);
-        });
-        const st = panel.querySelector('[data-status]'); st.textContent = 'Saving…';
-        try { await api('PUT', '/content', { [name]: arr }); content[name] = arr; if ($('#veCanvas') && $('#veCanvas').innerHTML) applySections($('#veCanvas'), content); st.textContent = 'Saved ✓ — live on the site'; setTimeout(() => { st.textContent = ''; }, 3000); }
-        catch (e) { st.textContent = ''; alert('Save failed: ' + e.message); }
-      });
+    async function veDiscard() {
+      if (!confirm('Discard unsaved changes?')) return;
+      try { content = await api('GET', '/content'); } catch (e) { }
+      clearDirty(); initVisualEditor(); veStatus('Changes discarded');
     }
 
-    // Gallery (array of image URLs)
-    function buildGalleryPanel() {
-      const panel = $('#panel-gallery');
-      panel.innerHTML = `
-        <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-          <div><h2 class="h5 fw-bold mb-1">Gallery</h2><p class="small text-muted mb-0">Add or remove images. They open as a popup on the site.</p></div>
-          <div class="d-flex gap-2 align-items-center"><span class="small text-muted" data-status></span>
-            <button class="btn btn-light" data-add>+ Add image</button><button class="btn btn-primary" data-save>Save</button></div>
-        </div>
-        <div class="row g-3" data-list></div>`;
-      const list = panel.querySelector('[data-list]');
-      const itemHtml = (url) => `<div class="col-6 col-md-3 col-lg-2 gallery-edit-item"><div class="card border p-1 position-relative">
-        <img src="${escA(url)}" style="width:100%;aspect-ratio:1;object-fit:cover;border-radius:6px;">
-        <button class="btn btn-sm btn-light text-danger position-absolute top-0 end-0 m-1 py-0 px-2" data-remove>✕</button>
-        <input type="hidden" data-f value="${escA(url)}"></div></div>`;
-      const render = () => { list.innerHTML = (content.gallery || []).map(itemHtml).join(''); wireRemove(); };
-      const wireRemove = () => list.querySelectorAll('[data-remove]').forEach((b) => b.addEventListener('click', () => b.closest('.gallery-edit-item').remove()));
-      render();
-      panel.querySelector('[data-add]').addEventListener('click', () => {
-        const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
-        input.onchange = async () => { const f = input.files[0]; if (!f) return; const st = panel.querySelector('[data-status]'); st.textContent = 'Uploading…'; try { const url = await uploadFile(f); const d = document.createElement('div'); d.innerHTML = itemHtml(url); list.appendChild(d.firstElementChild); wireRemove(); st.textContent = ''; } catch (e) { st.textContent = ''; alert('Upload failed: ' + e.message); } };
-        input.click();
-      });
-      panel.querySelector('[data-save]').addEventListener('click', async () => {
-        const arr = []; list.querySelectorAll('[data-f]').forEach((el) => arr.push(el.value));
-        const st = panel.querySelector('[data-status]'); st.textContent = 'Saving…';
-        try { await api('PUT', '/content', { gallery: arr }); content.gallery = arr; if ($('#veCanvas') && $('#veCanvas').innerHTML) applySections($('#veCanvas'), content); st.textContent = 'Saved ✓ — live on the site'; setTimeout(() => { st.textContent = ''; }, 3000); }
-        catch (e) { st.textContent = ''; alert('Save failed: ' + e.message); }
-      });
+    async function openHistory() {
+      let versions;
+      try { versions = await api('GET', '/versions'); } catch (e) { alert(e.message); return; }
+      const overlay = document.createElement('div'); overlay.className = 've-modal-backdrop';
+      const rows = versions.map((v, i) => `<div class="d-flex justify-content-between align-items-center border-bottom py-2 gap-2">
+        <div><div class="small fw-semibold">${esc(new Date(v.created_at).toLocaleString())}</div><div class="text-muted" style="font-size:12px;">${esc(v.label || 'Edit')}${i === 0 ? ' · current' : ''}</div></div>
+        <button class="btn btn-sm ${i === 0 ? 'btn-light' : 'btn-outline-dark'}" data-restore="${v.id}" ${i === 0 ? 'disabled' : ''}>${i === 0 ? 'Current' : 'Restore'}</button></div>`).join('');
+      overlay.innerHTML = `<div class="ve-modal"><div class="d-flex justify-content-between align-items-center mb-2"><h3 class="h6 fw-bold mb-0">⟲ Version History</h3><button class="btn-close ve-x"></button></div>
+        <p class="small text-muted">Restore a previous saved version — it becomes live and is itself saved as a new version, so you can always undo.</p>
+        <div>${rows || '<p class="text-muted small">No versions yet — save an edit first.</p>'}</div></div>`;
+      document.body.appendChild(overlay);
+      const close = () => overlay.remove();
+      overlay.querySelector('.ve-x').addEventListener('click', close);
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+      overlay.querySelectorAll('[data-restore]').forEach((b) => b.addEventListener('click', async () => {
+        if (!confirm('Restore this version? Any unsaved edits will be lost.')) return;
+        try { content = await api('POST', '/versions/restore', { id: Number(b.dataset.restore) }); clearDirty(); initVisualEditor(); veStatus('Version restored ✓'); close(); }
+        catch (e) { alert('Restore failed: ' + e.message); }
+      }));
     }
 
     // ---------------- Enquiries ----------------
@@ -242,8 +322,6 @@ export default function AdminScripts() {
       $('#loginView').classList.add('d-none'); $('#dashView').classList.remove('d-none');
       try { content = await api('GET', '/content'); } catch (e) { content = {}; }
       initVisualEditor();
-      ['programs', 'pricing', 'testimonials', 'faq'].forEach(buildSectionPanel);
-      buildGalleryPanel();
       loadEnquiries();
     }
 
@@ -255,12 +333,14 @@ export default function AdminScripts() {
     });
     $('#logoutBtn').addEventListener('click', () => { localStorage.removeItem(TOKEN_KEY); showLogin(); });
     $('#veSave').addEventListener('click', veSave);
+    $('#veDiscard').addEventListener('click', veDiscard);
+    $('#veHistory').addEventListener('click', openHistory);
     $('#menuBtn').addEventListener('click', () => { $('#adminSidebar').classList.add('open'); $('#adminBackdrop').classList.remove('d-none'); });
     $('#adminBackdrop').addEventListener('click', closeSidebar);
     document.querySelectorAll('[data-panel]').forEach((b) => b.addEventListener('click', () => {
       document.querySelectorAll('[data-panel]').forEach((x) => x.classList.remove('active'));
       b.classList.add('active');
-      ['editor', 'programs', 'pricing', 'testimonials', 'faq', 'gallery', 'enquiries'].forEach((p) => $('#panel-' + p).classList.toggle('d-none', p !== b.dataset.panel));
+      ['editor', 'enquiries'].forEach((p) => $('#panel-' + p).classList.toggle('d-none', p !== b.dataset.panel));
       closeSidebar();
     }));
 

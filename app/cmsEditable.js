@@ -6,10 +6,22 @@
 
 const SKIP = new Set(['svg', 'script', 'style', 'select', 'textarea', 'input', 'noscript']);
 
+// Extract a background image url from an element's inline style (skips svg refs like url(#id)).
+export function getBgUrl(el) {
+  if (!el || !el.getAttribute) return null;
+  const s = el.getAttribute('style');
+  if (!s || !/background/i.test(s)) return null;
+  const m = s.match(/background(?:-image)?\s*:\s*[^;]*url\((['"]?)([^'")]+)\1\)/i);
+  if (!m) return null;
+  const url = m[2].trim();
+  return url.startsWith('#') ? null : url;
+}
+
 export function collectEditable(root) {
   const items = [];
   let ti = 0;
   let ii = 0;
+  let bi = 0;
 
   function walk(node) {
     const children = Array.from(node.childNodes);
@@ -35,6 +47,13 @@ export function collectEditable(root) {
         }
         if (SKIP.has(tag)) continue;
         if (child.hasAttribute && child.hasAttribute('data-cms-skip')) continue; // managed structurally (sidebar)
+        const bg = getBgUrl(child);
+        if (bg) {
+          const key = 'b' + bi++;
+          child.setAttribute('data-cms-key', key);
+          child.setAttribute('data-cms-bg', bg);
+          items.push({ type: 'bg', el: child, key });
+        }
         if (child.classList && child.classList.contains('cms-text')) continue; // already processed
         walk(child);
       }
@@ -53,5 +72,9 @@ export function applyOverrides(items, overrides) {
     if (!it) continue;
     if (it.type === 'text') it.el.textContent = overrides[key];
     else if (it.type === 'img') it.el.setAttribute('src', overrides[key]);
+    else if (it.type === 'bg') {
+      it.el.style.backgroundImage = `url("${overrides[key]}")`;
+      it.el.setAttribute('data-cms-bg', overrides[key]);
+    }
   }
 }
