@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "permissions": {
+    "deny": [
+      "Read(.env)",
+      "Read(.env.!(example))",
+      "Read(**/.env)",
+      "Read(**/.env.!(example))",
+      "Edit(.env)",
+      "Edit(.env.!(example))",
+      "Edit(**/.env)",
+      "Edit(**/.env.!(example))",
+      "Write(.env)",
+      "Write(.env.!(example))",
+      "Write(**/.env)",
+      "Write(**/.env.!(example))",
+      "Grep(.env)",
+      "Grep(.env.!(example))",
+      "Grep(**/.env)",
+      "Grep(**/.env.!(example))"
+    ]
+  }
+}
